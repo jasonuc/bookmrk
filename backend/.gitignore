@@ -1,0 +1,24 @@
+# Dependency directories
+node_modules/
+
+# Nest.js specific
+dist/
+coverage/
+
+# Environment variables
+.env
+
+# Logs
+logs/
+*.log
+
+# Editor/IDE specific files
+.vscode/
+.idea/
+
+# Operating System files
+.DS_Store
+Thumbs.db
+
+# Optional: Uncomment the following line if using TypeScript
+# *.js
