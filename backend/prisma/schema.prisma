@@ -8,8 +8,56 @@ datasource db {
 }
 
 model User {
-  id        String   @id @unique
+  id        String   @id
   username  String   @unique
+  shelfs    Shelf[]
+  books     Book[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model Book {
+  id          String      @id @default(uuid())
+  name        String
+  imageUrl    String?
+  rating      Int
+  notes       Note[]
+  dateAdded   DateTime    @default(now())
+  lastUpdated DateTime    @updatedAt
+  progress    Progress    @default(READING)
+  user        User        @relation(fields: [userId], references: [id])
+  userId      String
+  bookShelf   BookShelf[]
+}
+
+model Shelf {
+  id          String      @id @default(uuid())
+  name        String
+  description String
+  user        User?       @relation(fields: [userId], references: [id])
+  userId      String
+  bookShelf   BookShelf[]
+}
+
+model BookShelf {
+  id      String @id @default(uuid())
+  bookId  String
+  shelfId String
+  book    Book   @relation(fields: [bookId], references: [id])
+  shelf   Shelf  @relation(fields: [shelfId], references: [id])
+}
+
+model Note {
+  id        String   @id @default(uuid())
+  content   String
+  bookId    String
+  createdAt DateTime @default(now())
+  book      Book     @relation(fields: [bookId], references: [id])
+}
+
+enum Progress {
+  READING
+  TBR
+  DNF
+  FINISHED
 }
