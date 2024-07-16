@@ -9,7 +9,7 @@ import { Request } from 'express';
 
 @Injectable()
 export class ClerkAuthGuard implements CanActivate {
-  private readonly logger = new Logger();
+  private readonly logger = new Logger(ClerkAuthGuard.name);
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const req = context.switchToHttp().getRequest<Request>();
@@ -17,11 +17,14 @@ export class ClerkAuthGuard implements CanActivate {
     if (!token) return false;
 
     try {
-      await clerkClient.verifyToken(token);
+      const session = await clerkClient.verifyToken(token);
+      const userId = session.sub;
+      req[userId] = userId;
     } catch (err) {
       this.logger.error(err);
       return false;
     }
+
     return true;
   }
 }
