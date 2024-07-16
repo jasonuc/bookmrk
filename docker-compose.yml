@@ -40,6 +40,6 @@ services:
       - db_data:/var/lib/postgresql/data
 
 volumes:
-  - frontend_node_modules:
-  - backend_node_modules:
-  - db_data:
+  frontend_node_modules:
+  backend_node_modules:
+  db_data:
