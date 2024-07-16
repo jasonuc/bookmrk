@@ -19,7 +19,7 @@ model User {
 
 model Book {
   id          String      @id @default(uuid())
-  name        String
+  title       String
   imageUrl    String?
   rating      Int
   notes       Note[]
