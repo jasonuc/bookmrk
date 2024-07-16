@@ -12,6 +12,7 @@ model User {
   username  String   @unique
   shelfs    Shelf[]
   books     Book[]
+  role      Role[]   @default([USER])
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -60,4 +61,10 @@ enum Progress {
   TBR
   DNF
   FINISHED
+}
+
+enum Role {
+  USER
+  ADMIN
+  OWNER
 }
