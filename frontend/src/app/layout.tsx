@@ -1,9 +1,9 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
-
-const inter = Inter({ subsets: ["latin"] });
+import { cn } from "@/lib/utils";
+import { lato } from "@/lib/fonts";
+import { neobrutalism } from "@clerk/themes";
 
 export const metadata: Metadata = {
   title: "Bookmrk",
@@ -12,9 +12,11 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children, }: Readonly<{ children: React.ReactNode; }>) {
   return (
-    <ClerkProvider>
+    <ClerkProvider afterSignOutUrl={'/'} appearance={{
+      baseTheme: [neobrutalism]
+    }}>
       <html lang="en">
-        <body className={inter.className}>{children}</body>
+        <body className={cn(lato.variable, 'font-lato')}>{children}</body>
       </html>
     </ClerkProvider>
   );
