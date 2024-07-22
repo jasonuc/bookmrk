@@ -21,7 +21,7 @@ model Book {
   id          String      @id @default(uuid())
   title       String
   imageUrl    String?
-  rating      Int
+  rating      Int         @default(0)
   notes       Note[]
   dateAdded   DateTime    @default(now())
   lastUpdated DateTime    @updatedAt

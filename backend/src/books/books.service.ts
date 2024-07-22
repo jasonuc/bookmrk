@@ -7,23 +7,23 @@ import { PrismaService } from '@/prisma/prisma.service';
 export class BooksService {
   constructor(private readonly prisma: PrismaService) {}
 
-  create(createBookDto: CreateBookDto) {
+  createNewUserBook(createBookDto: CreateBookDto) {
     return 'This action adds a new book';
   }
 
-  findAll() {
+  findAllUserBooks() {
     return `This action returns all books`;
   }
 
-  findOne(id: number) {
+  findOneUserBook(id: number) {
     return `This action returns a #${id} book`;
   }
 
-  update(id: number, updateBookDto: UpdateBookDto) {
+  updateUserBook(id: number, updateBookDto: UpdateBookDto) {
     return `This action updates a #${id} book`;
   }
 
-  remove(id: number) {
+  removeUserBook(id: number) {
     return `This action removes a #${id} book`;
   }
 }
