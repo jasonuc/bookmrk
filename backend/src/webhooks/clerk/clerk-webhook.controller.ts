@@ -1,7 +1,7 @@
-import { Controller, Post, Req, Res } from '@nestjs/common';
+import { Controller, Post, RawBodyRequest, Req, Res } from '@nestjs/common';
 import { Webhook } from 'svix';
 import { Request, Response } from 'express';
-import { WebhookEventType } from '@clerk/clerk-sdk-node';
+import { WebhookEventType, UserJSON } from '@clerk/clerk-sdk-node';
 import { UsersService } from '@/users/users.service';
 
 @Controller('webhooks/clerk')
@@ -9,19 +9,23 @@ export class ClerkWebhookController {
   constructor(private usersService: UsersService) {}
 
   @Post()
-  async post(@Req() req: Request, @Res() res: Response) {
-    const WEBHOOK_SECRET = process.env.WEBHOOK_SECRET;
+  async clerkWebhook(
+    @Req() req: RawBodyRequest<Request>,
+    @Res() res: Response,
+  ) {
+    const WEBHOOK_SECRET = process.env.CLERK_WEBHOOK_SECRET!;
     if (!WEBHOOK_SECRET)
       throw new Error('You need a WEBHOOK_SECRET in your .env');
 
     // Get the headers and body
     const headers = req.headers;
-    const payload = req.body;
+    const payload = req.rawBody.toString('utf8');
 
     // Get the Svix headers for verification
-    const svix_id = headers['svix-id'] as string;
-    const svix_timestamp = headers['svix-timestamp'] as string;
-    const svix_signature = headers['svix-signature'] as string;
+    const svix_id = headers['svix-id'];
+    const svix_timestamp = headers['svix-timestamp'];
+    const svix_signature = headers['svix-signature'];
+    console.log(svix_id, svix_timestamp, svix_signature);
 
     // If there are no Svix headers, error out
     if (!svix_id || !svix_timestamp || !svix_signature) {
@@ -40,9 +44,9 @@ export class ClerkWebhookController {
     // If the verification fails, error out and  return error code
     try {
       evt = wh.verify(payload, {
-        'svix-id': svix_id,
-        'svix-timestamp': svix_timestamp,
-        'svix-signature': svix_signature,
+        'svix-id': svix_id as string,
+        'svix-timestamp': svix_timestamp as string,
+        'svix-signature': svix_signature as string,
       });
     } catch (err) {
       console.log('Error verifying webhook:', err.message);
@@ -53,12 +57,22 @@ export class ClerkWebhookController {
     }
 
     // Do something with the payload
-    // For this guide, you simply log the payload to the console
-    const { id, username } = evt.data;
+    const { id, email_addresses, primary_email_address_id, username } =
+      evt.data as UserJSON;
     const eventType: WebhookEventType = evt.type;
 
     if (eventType === 'user.created') {
-      const newUser = { id, username };
+      const primaryEmailAddress = (
+        email_addresses as Record<string, any>[]
+      ).find((email_address) => {
+        if (email_address.id === primary_email_address_id)
+          return email_address['email_address'];
+      });
+      const newUser = {
+        id,
+        username,
+        primaryEmailAddress: primaryEmailAddress['email_address'],
+      };
       await this.usersService.createUser(newUser);
     } else if (eventType === 'user.updated') {
       const userToUpdate = { id, username };
