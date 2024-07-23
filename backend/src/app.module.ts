@@ -4,6 +4,7 @@ import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { WebhooksModule } from './webhooks/webhooks.module';
 import { AppController } from './app.controller';
+import { BooksModule } from './books/books.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { AppController } from './app.controller';
     AuthModule,
     WebhooksModule,
     UsersModule,
+    BooksModule,
   ],
   controllers: [AppController],
   providers: [],
