@@ -1,14 +1,16 @@
 import { PrismaService } from '@/prisma/prisma.service';
-import { ClerkClient, User } from '@clerk/clerk-sdk-node';
+import { clerkClient, ClerkClient, User } from '@clerk/clerk-sdk-node';
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 @Injectable()
 export class UsersService {
-  constructor(
-    private readonly prisma: PrismaService,
-    private readonly clerk: ClerkClient,
-  ) {}
+  clerk: ClerkClient;
+
+  constructor(private readonly prisma: PrismaService) {
+    this.clerk = clerkClient;
+  }
 
   async createUser(createUserDto: CreateUserDto): Promise<User> {
     const { id, username } = createUserDto;
@@ -19,6 +21,22 @@ export class UsersService {
     if (newUser) return await this.clerk.users.getUser(id);
 
     throw new BadRequestException();
+  }
+
+  async updateUser(updateUserDto: UpdateUserDto): Promise<User> {
+    const { id, username } = updateUserDto;
+    const updatedUser = await this.prisma.user.update({
+      data: { id, username },
+      where: { id },
+    });
+
+    if (updatedUser) return await this.clerk.users.getUser(id);
+
+    throw new BadRequestException();
+  }
+
+  async deleteUser(id: string) {
+    return await this.prisma.user.delete({ where: { id } });
   }
 
   async getUserById(userId: string): Promise<User | false> {
@@ -33,6 +51,4 @@ export class UsersService {
     if (user) return true;
     return false;
   }
-
-  async checkIfUsernameChanged(sessionId: string) {}
 }
