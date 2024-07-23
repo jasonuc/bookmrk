@@ -13,9 +13,9 @@ export class UsersService {
   }
 
   async createUser(createUserDto: CreateUserDto): Promise<User> {
-    const { id, username } = createUserDto;
+    const { id, username, primaryEmailAddress } = createUserDto;
     const newUser = await this.prisma.user.create({
-      data: { id, username },
+      data: { id, username, primaryEmailAddress },
     });
 
     if (newUser) return await this.clerk.users.getUser(id);
