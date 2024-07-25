@@ -31,10 +31,23 @@ export class BooksService {
   }
 
   async updateBook(id: string, updateBookDto: UpdateBookDto) {
-    return `This action updates a #${id} book`;
+    const updatedBook = await this.prisma.book.update({
+      where: { id },
+      data: { ...updateBookDto },
+    });
+
+    return updatedBook;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} book`;
+  async deleteOneBook(id: string) {
+    const deletedBook = await this.prisma.book.delete({ where: { id } });
+
+    return deletedBook;
+  }
+
+  async deleteAllUserBooks(userId: string) {
+    const userBooks = await this.prisma.book.deleteMany({ where: { userId } });
+
+    return userBooks;
   }
 }
