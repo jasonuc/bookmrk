@@ -34,7 +34,7 @@ export class BooksController {
 
   @Get(':id')
   async findOne(@Param('id') id: string) {
-    return await this.booksService.findOneBook(id);
+    return await this.booksService.findBook(id);
   }
 
   @Patch(':id')

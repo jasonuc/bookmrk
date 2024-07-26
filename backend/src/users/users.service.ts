@@ -1,6 +1,10 @@
 import { PrismaService } from '@/prisma/prisma.service';
 import { clerkClient, ClerkClient, User } from '@clerk/clerk-sdk-node';
-import { BadRequestException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 
@@ -39,10 +43,10 @@ export class UsersService {
     return await this.prisma.user.delete({ where: { id } });
   }
 
-  async getUserById(userId: string): Promise<User | false> {
+  async findUserById(userId: string): Promise<User | false> {
     const user = await this.clerk.users.getUser(userId);
     const userRegisteredInDB = await this.checkUserRegisteredInDB(user.id);
-    if (!userRegisteredInDB) return false;
+    if (!userRegisteredInDB) throw new NotFoundException(`User not found`);
     return user;
   }
 
