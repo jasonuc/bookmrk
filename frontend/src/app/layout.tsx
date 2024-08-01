@@ -3,7 +3,6 @@ import type { Metadata } from "next";
 import { ClerkProvider } from "@clerk/nextjs";
 import { cn } from "@/lib/utils";
 import { lato } from "@/lib/fonts";
-import { neobrutalism } from "@clerk/themes";
 
 export const metadata: Metadata = {
   title: "Bookmrk",
@@ -12,9 +11,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children, }: Readonly<{ children: React.ReactNode; }>) {
   return (
-    <ClerkProvider afterSignOutUrl={'/'} appearance={{
-      baseTheme: [neobrutalism]
-    }}>
+    <ClerkProvider afterSignOutUrl={'/'}>
       <html lang="en">
         <body className={cn(lato.variable, 'font-lato')}>{children}</body>
       </html>
