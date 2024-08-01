@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   description: "Read it, save it, log it !)",
 };
 
-export default function RootLayout({ children, userHomePage }: Readonly<{ children: React.ReactNode; userHomePage: React.ReactNode; }>) {
+export default function RootLayout({ children, userView }: Readonly<{ children: React.ReactNode; userView: React.ReactNode; }>) {
 
   const { userId }: { userId: string | null } = auth();
 
@@ -18,7 +18,7 @@ export default function RootLayout({ children, userHomePage }: Readonly<{ childr
     <ClerkProvider afterSignOutUrl={'/'}>
       <html lang="en">
         <body className={cn(lato.variable, 'font-lato')}>
-          {!userId ? children : userHomePage}
+          {!userId ? children : userView}
         </body>
       </html>
     </ClerkProvider>
