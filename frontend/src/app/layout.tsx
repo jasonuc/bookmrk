@@ -4,6 +4,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 import { cn } from "@/lib/utils";
 import { lato } from "@/lib/fonts";
 import { auth } from "@clerk/nextjs/server";
+import { TooltipProvider } from "@radix-ui/react-tooltip";
 
 export const metadata: Metadata = {
   title: "Bookmrk",
@@ -16,11 +17,13 @@ export default function RootLayout({ children, userView }: Readonly<{ children: 
 
   return (
     <ClerkProvider afterSignOutUrl={'/'}>
-      <html lang="en">
-        <body className={cn(lato.variable, 'font-lato')}>
-          {!userId ? children : userView}
-        </body>
-      </html>
+      <TooltipProvider>
+        <html lang="en">
+          <body className={cn(lato.variable, 'font-lato')}>
+            {!userId ? children : userView}
+          </body>
+        </html>
+      </TooltipProvider>
     </ClerkProvider>
   );
 }
