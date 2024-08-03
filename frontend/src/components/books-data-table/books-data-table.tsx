@@ -5,7 +5,7 @@ interface BooksDataTableInterface {
 export default function BooksDataTable({ booksData }: BooksDataTableInterface) {
     return (
         <div>
-            <p>hello world</p>
+            <p>Data Table Goes Here</p>
         </div>
     )
 }
