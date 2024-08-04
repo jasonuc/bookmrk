@@ -9,7 +9,6 @@ import {
     CardTitle,
 
 } from "@/components/ui/card"
-import { UserButton } from "@clerk/nextjs";
 import { auth } from "@clerk/nextjs/server";
 import BooksDataTable from "./books-data-table/books-data-table";
 import { Book } from "@/types/book.type";
@@ -34,15 +33,13 @@ export default async function Dashboard() {
     const booksData = await getBooksData();
 
     return (
-        <div className="w-full p-1 md:p-5">
-            <UserButton />
-            <Card className="block mx-auto bg-card-foreground/90 text-background max-w-6xl">
+        <div className="w-full p-1 md:p-5 mt-10">
+            <Card className="block mx-auto max-w-6xl">
                 <CardHeader>
                     <CardTitle>All Books</CardTitle>
-                    <CardDescription className="text-muted/70">List of all books you have saved</CardDescription>
+                    <CardDescription className="text-muted-foreground">List of all books you have saved</CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <p>CARD CONTENT GOES HERE</p>
                     <BooksDataTable columns={booksColumns} data={booksData} />
                 </CardContent>
             </Card>

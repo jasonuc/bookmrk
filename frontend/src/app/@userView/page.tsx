@@ -12,11 +12,16 @@ import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@
 import { Badge } from "@/components/ui/badge"
 import Image from "next/image";
 import Dashboard from "@/components/dashboard";
+import { currentUser } from "@clerk/nextjs/server";
+import FormattedUser from "@/components/formatted-user";
 
-export default function UserHomePage() {
+export default async function UserHomePage() {
+
+  const user = await currentUser()
+
   return (
-    <div className="flex min-h-screen w-full flex-col bg-muted/40">
-      <h1>Hello, World</h1>
+    <div className="relative flex min-h-screen w-full flex-col bg-foreground/10">
+      <FormattedUser />
       <Dashboard />
     </div>
   )
