@@ -1,10 +1,11 @@
 "use client";
+
 import { ColumnDef } from "@tanstack/react-table";
 import { Book, Status } from "@/types/book.type";
 import { Rating } from '@smastrom/react-rating'
 import FormattedStatus from "@/components/formatted-status";
 import TableHeader from "./table-header";
-
+import ActionButton from "./action-button";
 
 export const booksColumns: ColumnDef<Book>[] = [
   {
@@ -25,7 +26,7 @@ export const booksColumns: ColumnDef<Book>[] = [
     cell: ({ row }) => {
       const rating = parseInt(row.getValue("rating"));
       return (<Rating
-        style={{ maxWidth: 80 }}
+        className="max-w-[80px]"
         value={rating}
         readOnly />)
     }
@@ -37,6 +38,17 @@ export const booksColumns: ColumnDef<Book>[] = [
       const lastUpdated = new Date(row.getValue("lastUpdated")).toDateString();
 
       return lastUpdated;
+    }
+  },
+  {
+    accessorKey: "action",
+    header: () => <TableHeader header="" />,
+    cell: ({ row }) => {
+      const book = row.original;
+
+      return (
+        <ActionButton book={book} />
+      )
     }
   }
 ]
