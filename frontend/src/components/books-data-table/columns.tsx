@@ -6,6 +6,7 @@ import { Rating } from '@smastrom/react-rating'
 import FormattedStatus from "@/components/formatted-status";
 import TableHeader from "./table-header";
 import ActionButton from "./action-button";
+import { format } from "date-fns";
 
 export const booksColumns: ColumnDef<Book>[] = [
   {
@@ -35,9 +36,9 @@ export const booksColumns: ColumnDef<Book>[] = [
     accessorKey: "lastUpdated",
     header: () => <TableHeader header="Last Updated" />,
     cell: ({ row }) => {
-      const lastUpdated = new Date(row.getValue("lastUpdated")).toDateString();
+      const lastUpdated = format(new Date(row.getValue("lastUpdated")), 'dd/MM/yyyy');
 
-      return lastUpdated;
+      return <p>{`${lastUpdated}`}</p>;
     }
   },
   {
