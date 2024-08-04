@@ -1,5 +1,5 @@
-import { BookOpen, Eye, FolderOpen, MoreHorizontal, Pen, Trash2 } from "lucide-react"
-import { Button } from "@/components/ui/button"
+import { BookOpen, Eye, FolderOpen, MoreHorizontal, Pen, Trash2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -7,8 +7,8 @@ import {
     DropdownMenuLabel,
     DropdownMenuSeparator,
     DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { Book } from "@/types/book.type"
+} from "@/components/ui/dropdown-menu";
+import { Book } from "@/types/book.type";
 
 export default function ActionButton({ book }: { book: Book }) {
     return (
