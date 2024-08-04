@@ -17,27 +17,15 @@ export const metadata: Metadata = {
 export default function RootLayout({ children, guestView }: Readonly<{ children: React.ReactNode; guestView: React.ReactNode; }>) {
 
   const { userId }: { userId: string | null } = auth();
-
-  if (!userId) return (
-    <ClerkProvider afterSignOutUrl={'/'}>
-      <TooltipProvider>
-        <html lang="en">
-          <body className={cn(lato.variable, 'font-lato')}>
-            {guestView}
-          </body>
-        </html>
-      </TooltipProvider>
-    </ClerkProvider>
-  )
-
   return (
     <ClerkProvider afterSignOutUrl={'/'}>
       <TooltipProvider>
         <html lang="en">
           <body className={cn(lato.variable, 'font-lato relative flex min-h-screen w-full flex-col bg-foreground/5')}>
-            <DotPattern className="-z-50" />
-            <Header />
-            {children}
+            {userId && <DotPattern className="-z-50" />}
+            {userId && <Header />}
+            {userId && children}
+            {!userId && guestView}
           </body>
         </html>
       </TooltipProvider>
