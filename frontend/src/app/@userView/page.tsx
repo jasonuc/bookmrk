@@ -14,6 +14,7 @@ import Image from "next/image";
 import Dashboard from "@/components/dashboard";
 import { currentUser } from "@clerk/nextjs/server";
 import FormattedUser from "@/components/formatted-user";
+import DotPattern from "@/components/magicui/dot-pattern";
 
 export default async function UserHomePage() {
 
@@ -21,6 +22,7 @@ export default async function UserHomePage() {
 
   return (
     <div className="relative flex min-h-screen w-full flex-col bg-foreground/10">
+      <DotPattern className="-z-10" />
       <FormattedUser />
       <Dashboard />
     </div>
