@@ -33,7 +33,7 @@ export default async function Dashboard() {
     const booksData = await getBooksData();
 
     return (
-        <div className="w-full p-1 md:p-5 mt-10">
+        <div className="w-full p-1 md:p-5 mt-5">
             <Card className="block mx-auto max-w-6xl">
                 <CardHeader>
                     <CardTitle>All Books</CardTitle>
