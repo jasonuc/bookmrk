@@ -18,7 +18,7 @@ async function getBooksData(): Promise<Book[]> {
     const { getToken } = auth();
     const token = await getToken();
     
-    const userBooksRes = await fetch(`http://localhost:8000/api/books`, {
+    const userBooksRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/books`, {
         headers: {
             'Authorization': `Bearer ${token}`
         }
