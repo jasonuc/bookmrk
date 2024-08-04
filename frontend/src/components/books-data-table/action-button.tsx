@@ -1,3 +1,5 @@
+"use client";
+
 import { BookOpen, Eye, FolderOpen, MoreHorizontal, Pen, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -9,8 +11,13 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Book } from "@/types/book.type";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function ActionButton({ book }: { book: Book }) {
+
+    const router = useRouter();
+
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -22,7 +29,11 @@ export default function ActionButton({ book }: { book: Book }) {
             <DropdownMenuContent align="end">
                 <DropdownMenuLabel>Actions</DropdownMenuLabel>
 
-                <DropdownMenuItem className="space-x-2">
+                <DropdownMenuItem className="space-x-2" onClick={
+                    () => {
+                        router.push(`/book/${book.id}`)
+                    }
+                }>
                     <FolderOpen className="w-4 h-4" />
                     <p>Open</p>
                 </DropdownMenuItem>

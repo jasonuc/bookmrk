@@ -6,6 +6,8 @@ import { cn } from "@/lib/utils";
 import { lato } from "@/lib/fonts";
 import { auth } from "@clerk/nextjs/server";
 import { TooltipProvider } from "@radix-ui/react-tooltip";
+import DotPattern from "@/components/magicui/dot-pattern";
+import Header from "@/components/header";
 
 export const metadata: Metadata = {
   title: "Bookmrk",
@@ -16,12 +18,26 @@ export default function RootLayout({ children, guestView }: Readonly<{ children:
 
   const { userId }: { userId: string | null } = auth();
 
-  return (
+  if (!userId) return (
     <ClerkProvider afterSignOutUrl={'/'}>
       <TooltipProvider>
         <html lang="en">
           <body className={cn(lato.variable, 'font-lato')}>
-            {userId ? children : guestView}
+            {guestView}
+          </body>
+        </html>
+      </TooltipProvider>
+    </ClerkProvider>
+  )
+
+  return (
+    <ClerkProvider afterSignOutUrl={'/'}>
+      <TooltipProvider>
+        <html lang="en">
+          <body className={cn(lato.variable, 'font-lato relative flex min-h-screen w-full flex-col bg-foreground/5')}>
+            <DotPattern className="-z-50" />
+            <Header />
+            {children}
           </body>
         </html>
       </TooltipProvider>
