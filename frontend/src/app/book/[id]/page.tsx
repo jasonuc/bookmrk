@@ -1,7 +1,6 @@
 import FormattedStatus from "@/components/formatted-status";
 import BlurFade from "@/components/magicui/blur-fade";
 import GradualSpacing from "@/components/magicui/gradual-spacing";
-import NumberTicker from "@/components/magicui/number-ticker";
 import { Separator } from "@/components/ui/separator";
 import { Book } from "@/types/book.type";
 import { auth } from "@clerk/nextjs/server";
