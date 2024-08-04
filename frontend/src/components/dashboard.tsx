@@ -12,9 +12,10 @@ import {
 import { UserButton } from "@clerk/nextjs";
 import { auth } from "@clerk/nextjs/server";
 import BooksDataTable from "./books-data-table/books-data-table";
+import { Book } from "@/types/book.type";
+import { booksColumns } from "./books-data-table/columns";
 
-export default async function Dashboard() {
-
+async function getBooksData(): Promise<Book[]> {
     const { getToken } = auth();
     const token = await getToken();
     
@@ -24,6 +25,13 @@ export default async function Dashboard() {
         }
     });
     const booksData: Book[] = await userBooksRes.json();
+
+    return booksData
+}
+
+export default async function Dashboard() {
+
+    const booksData = await getBooksData();
 
     return (
         <div className="w-full p-1 md:p-5">
@@ -35,7 +43,7 @@ export default async function Dashboard() {
                 </CardHeader>
                 <CardContent>
                     <p>CARD CONTENT GOES HERE</p>
-                    <BooksDataTable booksData={booksData} />
+                    <BooksDataTable columns={booksColumns} data={booksData} />
                 </CardContent>
             </Card>
         </div>

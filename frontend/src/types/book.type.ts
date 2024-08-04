@@ -1,6 +1,6 @@
-type Status = "READING" | "TBR" | "DNF" | "FINISHED";
+export type Status = "READING" | "TBR" | "DNF" | "FINISHED";
 
-type Book = {
+export type Book = {
     id: string;
     title: string;
     imageUrl: string;
