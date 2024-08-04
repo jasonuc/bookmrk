@@ -8,7 +8,7 @@ export default async function UserHomePage() {
   const user = await currentUser()
 
   return (
-    <div className="relative flex min-h-screen w-full flex-col bg-foreground/10">
+    <div className="relative flex min-h-screen w-full flex-col bg-foreground/5">
       <DotPattern className="-z-10" />
       <Header />
       <Dashboard />

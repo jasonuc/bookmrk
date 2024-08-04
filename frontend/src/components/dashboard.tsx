@@ -36,7 +36,7 @@ export default async function Dashboard() {
         <div className="w-full p-1 md:p-5 mt-5">
             <Card className="block mx-auto max-w-6xl">
                 <CardHeader>
-                    <CardTitle>All Books</CardTitle>
+                    <CardTitle>{"All Books 📚"}</CardTitle>
                     <CardDescription className="text-muted-foreground">List of all books you have saved</CardDescription>
                 </CardHeader>
                 <CardContent>
