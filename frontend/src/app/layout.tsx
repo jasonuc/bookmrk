@@ -1,4 +1,5 @@
 import "./globals.css";
+import '@smastrom/react-rating/style.css'
 import type { Metadata } from "next";
 import { ClerkProvider } from "@clerk/nextjs";
 import { cn } from "@/lib/utils";
