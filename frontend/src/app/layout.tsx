@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   description: "Read it, save it, log it !)",
 };
 
-export default function RootLayout({ children, userView }: Readonly<{ children: React.ReactNode; userView: React.ReactNode; }>) {
+export default function RootLayout({ children, guestView }: Readonly<{ children: React.ReactNode; guestView: React.ReactNode; }>) {
 
   const { userId }: { userId: string | null } = auth();
 
@@ -21,7 +21,7 @@ export default function RootLayout({ children, userView }: Readonly<{ children: 
       <TooltipProvider>
         <html lang="en">
           <body className={cn(lato.variable, 'font-lato')}>
-            {!userId ? children : userView}
+            {userId ? children : guestView}
           </body>
         </html>
       </TooltipProvider>
