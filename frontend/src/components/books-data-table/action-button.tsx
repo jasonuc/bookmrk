@@ -31,7 +31,7 @@ export default function ActionButton({ book }: { book: Book }) {
 
                 <DropdownMenuItem className="space-x-2" onClick={
                     () => {
-                        router.push(`/book/${book.id}`)
+                        router.push(`/home/book/${book.id}`)
                     }
                 }>
                     <FolderOpen className="w-4 h-4" />

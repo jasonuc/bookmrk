@@ -1,6 +1,5 @@
 import FormattedStatus from "@/components/formatted-status";
 import BlurFade from "@/components/magicui/blur-fade";
-import GradualSpacing from "@/components/magicui/gradual-spacing";
 import { Separator } from "@/components/ui/separator";
 import { Book } from "@/types/book.type";
 import { auth } from "@clerk/nextjs/server";
@@ -29,31 +28,43 @@ export default async function BookPage({ params }: { params: { id: string } }) {
   const { title, rating, status, lastUpdated, dateAdded } = book;
 
   return (
-    <div className="p-5 md:p-10 flex flex-col items-start space-y-10">
+    <div className="p-5 md:p-10 flex flex-col items-start space-y-8 md:space-y-10 grow border-8">
 
-      <div className="flex space-x-5 items-center rounded-md border-2 border-solid border-black p-2 max-w-fit">
-        <GradualSpacing text={title}
-          className="text-4xl font-bold italic"
-        />
+      <BlurFade yOffset={10}>
+        <div className="flex flex-col md:flex-row space-x-5 space-y-5 items-center rounded-md max-w-fit">
+          <h2 className="text-2xl md:text-4xl font-bold italic">{title}</h2>
 
-        <BlurFade yOffset={10}>
+
           <Rating value={rating} readOnly
-            className="w-32"
+            className="w-44 md:w-36 relative md:bottom-1.5"
           />
+        </div>
+      </BlurFade>
+
+      <div className="grid grid-cols-1 grid-rows-2 md:grid-rows-1 md:grid-cols-2 gap-y-5 w-full h-full">
+        
+        <div className="col-span-1 flex flex-col space-y-8 md:space-y-10">
+          <BlurFade delay={0.1}>
+            <div className="flex items-center space-x-2">
+              <p className="font-bold">Status: </p>
+              <FormattedStatus status={status} className="text-base px-4 py-1" />
+            </div>
+          </BlurFade>
+
+          <BlurFade delay={0.2}>
+            <div className="flex space-x-3 items-center">
+              <p className="text-lg font-semibold">{`Updated @ ${format(new Date(lastUpdated), "dd/MM/yyyy")}`}</p>
+              <Separator orientation="vertical" className="bg-black max-md:hidden" />
+              <p className="text-lg font-semibold">{`Added @ ${format(new Date(dateAdded), "dd/MM/yyyy")}`}</p>
+            </div>
+          </BlurFade>
+        </div>
+
+        <BlurFade delay={0.3}>
+          <div className="bg-muted-foreground w-full h-full" />
         </BlurFade>
-      </div>
 
-      <div className="flex items-center space-x-2">
-        <p className="font-bold">Status: </p>
-        <FormattedStatus status={status} className="text-base px-4 py-1" />
       </div>
-
-      <div className="flex space-x-3 items-center">
-        <p className="text-lg font-semibold">{`Updated @ ${format(new Date(lastUpdated), "dd/MM/yyyy")}`}</p>
-        <Separator orientation="vertical" className="bg-black" />
-        <p className="text-lg font-semibold">{`Added @ ${format(new Date(dateAdded), "dd/MM/yyyy")}`}</p>
-      </div>
-
 
     </div>
   )

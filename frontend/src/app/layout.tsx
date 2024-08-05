@@ -14,14 +14,14 @@ export const metadata: Metadata = {
   description: "Read it, save it, log it !)",
 };
 
-export default function RootLayout({ children, guestView }: Readonly<{ children: React.ReactNode; guestView: React.ReactNode; }>) {
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode; }>) {
 
   const { userId }: { userId: string | null } = auth();
   return (
     <ClerkProvider afterSignOutUrl={'/'}>
       <TooltipProvider>
         <html lang="en">
-          <body className={cn(lato.variable, 'font-lato relative flex h-screen w-full flex-col bg-foreground/5')}>
+          <body className={cn(lato.variable, 'font-lato relative flex h-screen w-full flex-col text-black bg-foreground/5')}>
             {userId && <DotPattern className="-z-50" />}
             {userId && <Header />}
             {children}
