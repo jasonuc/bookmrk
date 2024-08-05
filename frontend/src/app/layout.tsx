@@ -7,7 +7,6 @@ import { lato } from "@/lib/fonts";
 import { auth } from "@clerk/nextjs/server";
 import { TooltipProvider } from "@radix-ui/react-tooltip";
 import DotPattern from "@/components/magicui/dot-pattern";
-import Header from "@/components/header";
 
 export const metadata: Metadata = {
   title: "Bookmrk",
@@ -23,7 +22,6 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       <TooltipProvider>
         <html lang="en">
           <body className={cn(lato.variable, 'font-lato relative flex h-screen w-full flex-col text-black bg-foreground/5')}>
-            <Header />
             {children}
 
             <DotPattern className="-z-50" />
