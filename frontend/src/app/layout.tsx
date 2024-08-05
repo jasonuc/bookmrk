@@ -21,11 +21,10 @@ export default function RootLayout({ children, guestView }: Readonly<{ children:
     <ClerkProvider afterSignOutUrl={'/'}>
       <TooltipProvider>
         <html lang="en">
-          <body className={cn(lato.variable, 'font-lato relative flex min-h-screen w-full flex-col bg-foreground/5')}>
+          <body className={cn(lato.variable, 'font-lato relative flex h-screen w-full flex-col bg-foreground/5')}>
             {userId && <DotPattern className="-z-50" />}
             {userId && <Header />}
-            {userId && children}
-            {!userId && guestView}
+            {children}
           </body>
         </html>
       </TooltipProvider>
