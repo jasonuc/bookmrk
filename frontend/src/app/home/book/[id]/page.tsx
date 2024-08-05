@@ -34,7 +34,6 @@ export default async function BookPage({ params }: { params: { id: string } }) {
         <div className="flex flex-col md:flex-row space-x-5 space-y-5 items-center rounded-md max-w-fit">
           <h2 className="text-2xl md:text-4xl font-bold italic">{title}</h2>
 
-
           <Rating value={rating} readOnly
             className="w-44 md:w-36 relative md:bottom-1.5"
           />
@@ -65,7 +64,6 @@ export default async function BookPage({ params }: { params: { id: string } }) {
         </BlurFade>
 
       </div>
-
     </div>
   )
 }
