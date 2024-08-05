@@ -28,7 +28,7 @@ export default async function BookPage({ params }: { params: { id: string } }) {
   const { title, rating, status, lastUpdated, dateAdded } = book;
 
   return (
-    <div className="p-5 md:p-10 flex flex-col items-start space-y-8 md:space-y-10 grow border-8">
+    <div className="p-5 md:p-10 flex flex-col items-start space-y-8 md:space-y-10 grow">
 
       <BlurFade yOffset={10}>
         <div className="flex flex-col md:flex-row space-x-5 space-y-5 items-center rounded-md max-w-fit">
