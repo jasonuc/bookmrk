@@ -15,6 +15,7 @@ export class ClerkWebhookController {
     @Res() res: Response,
   ) {
     const WEBHOOK_SECRET = process.env.CLERK_WEBHOOK_SECRET!;
+    console.log(WEBHOOK_SECRET);
     if (!WEBHOOK_SECRET)
       throw new Error('You need a WEBHOOK_SECRET in your .env');
 
@@ -59,13 +60,15 @@ export class ClerkWebhookController {
     // Do something with the payload
     const { id, email_addresses, primary_email_address_id, username } =
       evt.data as UserJSON;
-    const primaryEmailAddress = extractClerkPrimaryEmail(
-      email_addresses,
-      primary_email_address_id,
-    );
+
     const eventType: WebhookEventType = evt.type;
 
     if (eventType === 'user.created') {
+      const primaryEmailAddress = extractClerkPrimaryEmail(
+        email_addresses,
+        primary_email_address_id,
+      );
+
       const newUser = {
         id,
         username,
@@ -73,6 +76,11 @@ export class ClerkWebhookController {
       };
       await this.usersService.createUser(newUser);
     } else if (eventType === 'user.updated') {
+      const primaryEmailAddress = extractClerkPrimaryEmail(
+        email_addresses,
+        primary_email_address_id,
+      );
+
       const userToUpdate = {
         id,
         username,
