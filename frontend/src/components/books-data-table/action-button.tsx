@@ -54,10 +54,10 @@ export default function ActionButton({ book }: { book: Book }) {
 
                 <DropdownMenuSeparator />
 
-                <DropdownMenuItem className="space-x-2">
+                {/* <DropdownMenuItem className="space-x-2">
                     <Eye className="w-4 h-4" />
                     <p>View notes</p>
-                </DropdownMenuItem>
+                </DropdownMenuItem> */}
 
                 <DropdownMenuItem className="space-x-2">
                     <Pen className="w-4 h-4" />

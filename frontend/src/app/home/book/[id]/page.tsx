@@ -7,6 +7,7 @@ import { Rating } from "@smastrom/react-rating";
 import { format } from "date-fns";
 import axios from "axios";
 import SparklesText from "@/components/magicui/sparkles-text";
+import { cn } from "@/lib/utils";
 
 async function getBookData(bookId: string): Promise<Book> {
   const { getToken } = auth();
@@ -56,7 +57,10 @@ export default async function BookPage({ params }: { params: { id: string } }) {
         </div>
       </BlurFade>
 
-      <div className="pb-2 grid grid-cols-1 grid-rows-[15%_85%] md:grid-rows-1 md:grid-cols-2 gap-y-5 w-full h-full text-lg">
+      <div className={cn("pb-5 grid grid-cols-1 md:grid-rows-1 md:grid-cols-2 gap-y-5 w-full h-full text-lg", {
+        "grid-rows-[25%_75%]": viewerUserId !== userId,
+        "grid-rows-[20%_80%]": viewerUserId === userId,
+      })}>
 
         <div className="col-span-1 flex flex-col space-y-8 md:space-y-10">
           <BlurFade delay={blurFadeDelay()}>
