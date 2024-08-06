@@ -19,6 +19,8 @@ import {
     TableRow,
 } from "@/components/ui/table"
 import { Button } from "../ui/button"
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
@@ -26,6 +28,9 @@ interface DataTableProps<TData, TValue> {
 }
 
 export default function BooksDataTable<TData, TValue>({ columns, data }: DataTableProps<TData, TValue>) {
+
+    const router = useRouter();
+
     // State to manage pagination
     const [pagination, setPagination] = useState<PaginationState>({
         pageIndex: 0,
@@ -92,12 +97,14 @@ export default function BooksDataTable<TData, TValue>({ columns, data }: DataTab
             </Table>
 
             <div className="flex items-center justify-between px-4 py-4">
-                <Button
-                    variant="outline"
-                    size="sm"
-                >
-                    {"Add Book 📕"}
-                </Button>
+                <Link href={'/home/add-book'}>
+                    <Button
+                        variant="outline"
+                        size="sm"
+                    >
+                        {"Add Book 📕"}
+                    </Button>
+                </Link>
 
                 <div className='flex space-x-2'>
                     <Button
