@@ -30,6 +30,11 @@ export class BooksService {
   async findBook(id: string) {
     const book = await this.prisma.book.findUnique({
       where: { id },
+      include: {
+        user: {
+          select: { id: true, username: true },
+        },
+      },
     });
     if (!book) throw new BadRequestException(`BOOK ID: {${id}} DOES NOT EXIST`);
 
