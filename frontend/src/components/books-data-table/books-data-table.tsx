@@ -91,23 +91,32 @@ export default function BooksDataTable<TData, TValue>({ columns, data }: DataTab
                 </TableBody>
             </Table>
 
-            <div className="flex items-center justify-end space-x-2 px-4 py-4">
+            <div className="flex items-center justify-between px-4 py-4">
                 <Button
                     variant="outline"
                     size="sm"
-                    onClick={() => table.setPageIndex(table.getState().pagination.pageIndex - 1)}
-                    disabled={!table.getCanPreviousPage()}
                 >
-                    {"Previous ⬅️"}
+                    {"Add Book 📕"}
                 </Button>
-                <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => table.setPageIndex(table.getState().pagination.pageIndex + 1)}
-                    disabled={!table.getCanNextPage()}
-                >
-                    {"Next ➡️"}
-                </Button>
+
+                <div className='flex space-x-2'>
+                    <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => table.setPageIndex(table.getState().pagination.pageIndex - 1)}
+                        disabled={!table.getCanPreviousPage()}
+                    >
+                        {"Previous ⬅️"}
+                    </Button>
+                    <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => table.setPageIndex(table.getState().pagination.pageIndex + 1)}
+                        disabled={!table.getCanNextPage()}
+                    >
+                        {"Next ➡️"}
+                    </Button>
+                </div>
             </div>
         </div>
     )
