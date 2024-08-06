@@ -13,19 +13,19 @@ import { auth } from "@clerk/nextjs/server";
 import BooksDataTable from "./books-data-table/books-data-table";
 import { Book } from "@/types/book.type";
 import { booksColumns } from "./books-data-table/columns";
+import axios from "axios";
 
 async function getBooksData(): Promise<Book[]> {
     const { getToken } = auth();
     const token = await getToken();
     
-    const userBooksRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/books`, {
+    const { data: booksData } = await axios(`${process.env.NEXT_PUBLIC_API_URL}/api/books`, {
         headers: {
             'Authorization': `Bearer ${token}`
         }
     });
-    const booksData: Book[] = await userBooksRes.json();
 
-    return booksData
+    return booksData;
 }
 
 export default async function Dashboard() {

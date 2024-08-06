@@ -6,17 +6,17 @@ import { Book } from "@/types/book.type";
 import { auth } from "@clerk/nextjs/server";
 import { Rating } from "@smastrom/react-rating";
 import { format } from "date-fns";
+import axios from "axios";
 
 async function getBookData(bookId: string): Promise<Book> {
   const { getToken } = auth();
   const token = await getToken();
 
-  const userBooksRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/books/${bookId}`, {
+  const { data: booksData } = await axios(`${process.env.NEXT_PUBLIC_API_URL}/api/books/${bookId}`, {
     headers: {
       'Authorization': `Bearer ${token}`
     }
   });
-  const booksData: Book = await userBooksRes.json();
 
   return booksData
 }
