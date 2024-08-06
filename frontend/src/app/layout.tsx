@@ -7,6 +7,7 @@ import { lato } from "@/lib/fonts";
 import { TooltipProvider } from "@radix-ui/react-tooltip";
 import DotPattern from "@/components/magicui/dot-pattern";
 import Header from "@/components/header";
+import { Toaster } from "@/components/ui/toaster";
 
 export const metadata: Metadata = {
   title: "Bookmrk",
@@ -23,6 +24,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             <Header />
             {children}
 
+            <Toaster />
             <DotPattern className="-z-50" />
           </body>
         </html>

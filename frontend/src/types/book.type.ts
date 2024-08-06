@@ -1,3 +1,5 @@
+import { User } from "./user.type";
+
 export type Status = "READING" | "TBR" | "DNF" | "FINISHED";
 
 export type Book = {
@@ -9,4 +11,5 @@ export type Book = {
     userId: string;
     lastUpdated: Date;
     dateAdded: Date;
+    user: User;
 }

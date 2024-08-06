@@ -6,6 +6,7 @@ import { auth } from "@clerk/nextjs/server";
 import { Rating } from "@smastrom/react-rating";
 import { format } from "date-fns";
 import axios from "axios";
+import SparklesText from "@/components/magicui/sparkles-text";
 
 async function getBookData(bookId: string): Promise<Book> {
   const { getToken } = auth();
@@ -20,12 +21,25 @@ async function getBookData(bookId: string): Promise<Book> {
   return booksData
 }
 
+const makeDelay = (name: string, start: number, increment: number) => {
+  let delay = 0.1;
+
+  const increase = () => {
+    delay += increment;
+    return delay;
+  }
+
+  return increase
+}
+
 export default async function BookPage({ params }: { params: { id: string } }) {
 
   const { id } = params;
   const book = await getBookData(id);
+  const { userId: viewerUserId } = auth()
+  const blurFadeDelay = makeDelay("Blur Fade Component's Delay", 0.1, 0.1);
 
-  const { title, rating, status, lastUpdated, dateAdded } = book;
+  const { title, rating, status, lastUpdated, dateAdded, userId, user } = book;
 
   return (
     <div className="p-5 md:p-10 flex flex-col items-start space-y-8 md:space-y-10 grow">
@@ -42,26 +56,34 @@ export default async function BookPage({ params }: { params: { id: string } }) {
         </div>
       </BlurFade>
 
-      <div className="pb-2 grid grid-cols-1 grid-rows-[15%_85%] md:grid-rows-1 md:grid-cols-2 gap-y-5 w-full h-full">
+      <div className="pb-2 grid grid-cols-1 grid-rows-[15%_85%] md:grid-rows-1 md:grid-cols-2 gap-y-5 w-full h-full text-lg">
 
         <div className="col-span-1 flex flex-col space-y-8 md:space-y-10">
-          <BlurFade delay={0.1}>
+          <BlurFade delay={blurFadeDelay()}>
             <div className="flex items-center space-x-2">
               <p className="font-bold">Status: </p>
               <FormattedStatus status={status} className="text-base px-4 py-1" />
             </div>
           </BlurFade>
 
-          <BlurFade delay={0.2}>
+          <BlurFade delay={blurFadeDelay()}>
             <div className="flex space-x-3 items-center">
-              <p className="text-lg font-semibold">{`Updated @ ${format(new Date(lastUpdated), "dd/MM/yyyy")}`}</p>
+              <p className="font-semibold">{`Updated @ ${format(new Date(lastUpdated), "dd/MM/yyyy")}`}</p>
               <Separator orientation="vertical" className="bg-black max-md:hidden" />
-              <p className="text-lg font-semibold">{`Added @ ${format(new Date(dateAdded), "dd/MM/yyyy")}`}</p>
+              <p className="font-semibold">{`Added @ ${format(new Date(dateAdded), "dd/MM/yyyy")}`}</p>
+            </div>
+          </BlurFade>
+          
+          <BlurFade delay={blurFadeDelay()}>
+            <div className="flex space-x-3 items-center">
+              { viewerUserId !== userId && (
+                <div className="flex space-x-1"><span>Added by </span><SparklesText sparklesCount={2} as={<span />} text={user?.username} className="text-lg" /></div>
+              )}
             </div>
           </BlurFade>
         </div>
 
-        <BlurFade delay={0.3}>
+        <BlurFade delay={blurFadeDelay()}>
           <div className="bg-muted-foreground w-full h-full" />
         </BlurFade>
 

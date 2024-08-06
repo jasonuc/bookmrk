@@ -1,6 +1,6 @@
 "use client";
 
-import { BookOpen, Eye, FolderOpen, MoreHorizontal, Pen, Trash2 } from "lucide-react";
+import { BookOpen, Eye, FolderOpen, MoreHorizontal, Pen, ShareIcon, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
     DropdownMenu,
@@ -12,11 +12,12 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Book } from "@/types/book.type";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
+import { useToast } from "@/components/ui/use-toast";
 
 export default function ActionButton({ book }: { book: Book }) {
 
     const router = useRouter();
+    const { toast } = useToast()
 
     return (
         <DropdownMenu>
@@ -36,6 +37,19 @@ export default function ActionButton({ book }: { book: Book }) {
                 }>
                     <FolderOpen className="w-4 h-4" />
                     <p>Open</p>
+                </DropdownMenuItem>
+
+                <DropdownMenuItem className="space-x-2" onClick={
+                    async () => {
+                        await navigator.clipboard.writeText(`${window.location.origin}/home/book/${book.id}`);
+                        toast({
+                            title: '🎉 Copied to Clipboard',
+                            description: 'Now you can share the URL with your friends on Bookmrk'
+                        });
+                    }
+                }>
+                    <ShareIcon className="w-4 h-4" />
+                    <p>Share</p>
                 </DropdownMenuItem>
 
                 <DropdownMenuSeparator />
