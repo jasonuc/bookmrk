@@ -37,7 +37,7 @@ export default async function Dashboard() {
             <Card className="block mx-auto max-w-6xl">
                 <CardHeader>
                     <CardTitle>{"All Books 📚"}</CardTitle>
-                    <CardDescription className="text-muted-foreground">List of all books you have saved</CardDescription>
+                    <CardDescription className="text-muted-foreground">List of all books you have <span className="font-semibold">bookmrked</span></CardDescription>
                 </CardHeader>
                 <CardContent>
                     <BooksDataTable columns={booksColumns} data={booksData} />

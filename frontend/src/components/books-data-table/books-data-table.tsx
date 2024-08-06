@@ -84,7 +84,7 @@ export default function BooksDataTable<TData, TValue>({ columns, data }: DataTab
                     ) : (
                         <TableRow>
                             <TableCell colSpan={columns.length} className="h-24 text-center">
-                                No results.
+                                {"Looks like someone hasn't been reading 🤭"}
                             </TableCell>
                         </TableRow>
                     )}
