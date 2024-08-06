@@ -12,7 +12,7 @@ export default function Header() {
   return (
     <div className="w-full h-20 flex items-center justify-between p-4 md:p-10">
       <Link href='/home'>
-        <GradualSpacing text="Bookmrk" className="text-[2rem] md:text-[2.5rem] font-bold" />
+        <GradualSpacing text="Bookmrk" className="cursor-pointer z-10 whitespace-pre-wrap bg-gradient-to-b from-[#ffd319] via-[#ff2975] to-[#8c1eff] bg-clip-text text-center text-[2rem] md:text-[2.5rem] font-bold leading-none tracking-tight text-transparent" />
       </Link>
 
       <AnimatedUser />

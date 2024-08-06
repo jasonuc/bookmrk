@@ -1,12 +1,10 @@
 import Dashboard from "@/components/dashboard";
-import Header from "@/components/header";
 
 export default function UserHomePage() {
 
   return (
-    <>
-      <Header />
+    <div className="w-full p-1 md:p-5 mt-5">
       <Dashboard />
-    </>
+    </div>
   )
 }

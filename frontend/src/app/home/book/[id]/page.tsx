@@ -1,5 +1,4 @@
 import FormattedStatus from "@/components/formatted-status";
-import Header from "@/components/header";
 import BlurFade from "@/components/magicui/blur-fade";
 import { Separator } from "@/components/ui/separator";
 import { Book } from "@/types/book.type";
@@ -30,7 +29,6 @@ export default async function BookPage({ params }: { params: { id: string } }) {
 
   return (
     <div className="p-5 md:p-10 flex flex-col items-start space-y-8 md:space-y-10 grow">
-      <Header />
 
       <BlurFade yOffset={10} className="w-full flex flex-col items-center">
         <div className="flex flex-col md:flex-row space-x-5 space-y-5 items-center rounded-md max-w-fit">
