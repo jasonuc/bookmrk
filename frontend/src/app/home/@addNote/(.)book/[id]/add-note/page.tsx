@@ -8,7 +8,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { AddNoteDialogForm } from "@/components/add-note-dialog-form";
+import AddNoteForm from "@/components/add-note-form";
 import { Book } from "@/types/book.type";
 import { useBookData } from "@/hooks/use-book-data";
 
@@ -39,7 +39,7 @@ export default function InterceptedAddNotePage({ params }: InterceptedAddNotePag
         </DialogHeader>
 
         <div className="grid gap-4 py-4">
-          <AddNoteDialogForm book={book} setDialogIsOpen={setIsOpen} isOnInterceptedRoute={true} />
+          <AddNoteForm book={book} setDialogIsOpen={setIsOpen} isOnInterceptedRoute={true} />
         </div>
       </DialogContent>
     </Dialog>

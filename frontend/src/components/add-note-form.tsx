@@ -16,8 +16,6 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import FileUploader from "./file-uploader";
 import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
 import { useClerk, useUser } from "@clerk/nextjs";
@@ -25,13 +23,13 @@ import axios from "axios";
 import { Textarea } from "./ui/textarea";
 import { Book } from "@/types/book.type";
 
-interface AddNoteFormProps {
-  setDialogIsOpen: false | ((isOpen: boolean) => void);
+interface AddNoteFormProps extends React.HTMLAttributes<HTMLDivElement> {
+  setDialogIsOpen?: ((isOpen: boolean) => void);
   isOnInterceptedRoute?: boolean;
   book?: Book | null;
 }
 
-export function AddNoteDialogForm({ setDialogIsOpen, isOnInterceptedRoute = false, book = null }: AddNoteFormProps) {
+export default function AddNoteForm({ setDialogIsOpen, isOnInterceptedRoute = false, book = null, className }: AddNoteFormProps) {
 
   const { toast } = useToast();
 
@@ -76,8 +74,12 @@ export function AddNoteDialogForm({ setDialogIsOpen, isOnInterceptedRoute = fals
     //   })
     // }
 
+    toast({
+      title: "This functionality hasn't been implemented yet"
+    })
+
     // Closes the dialog
-    (setDialogIsOpen as Function)(false);
+    isOnInterceptedRoute && (setDialogIsOpen as Function)(false);
 
     // Reset form
     form.reset()
@@ -89,7 +91,7 @@ export function AddNoteDialogForm({ setDialogIsOpen, isOnInterceptedRoute = fals
   if (!book) return null;
 
   return (
-    <div>
+    <div className={className}>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <FormField
@@ -112,7 +114,10 @@ export function AddNoteDialogForm({ setDialogIsOpen, isOnInterceptedRoute = fals
               </FormItem>
             )}
           />
-          <Button type="submit">Submit</Button>
+          
+          <div className="w-full">
+            <Button type="submit" className="float-right">Submit</Button>
+          </div>
         </form>
       </Form>
     </div>

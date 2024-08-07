@@ -32,7 +32,7 @@ import axios from "axios";
 import { useClerk, useUser } from "@clerk/nextjs";
 
 interface AddBookFormProps {
-    setDialogIsOpen: false | ((isOpen: boolean) => void);
+    setDialogIsOpen?: ((isOpen: boolean) => void);
     isOnInterceptedRoute?: boolean;
 }
 
@@ -53,7 +53,7 @@ export default function AddBookForm({ setDialogIsOpen, isOnInterceptedRoute = fa
             rating: 0,
             status: Status.TBR,
         }
-    })
+    });
 
     async function onSubmit(values: z.infer<typeof addBookFormSchema>) {
         // Do something with the form values.

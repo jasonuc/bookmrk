@@ -3,7 +3,7 @@ import { useClerk } from '@clerk/nextjs';
 import axios from 'axios';
 import { useState, useLayoutEffect } from 'react';
 
-export function useBookData(bookId: string) {
+export function useBookData(bookId: string, tokenOverwrite?: string) {
 
     const [ bookData, setBookData ] = useState<Book | null>(null);
     const clerk = useClerk();
@@ -11,7 +11,8 @@ export function useBookData(bookId: string) {
     useLayoutEffect(() => {
 
         async function getBookData(): Promise<Book | null> {
-            const token = await clerk.session?.getToken();
+            const token = tokenOverwrite ? tokenOverwrite : await clerk.session?.getToken();
+            console.log(token);
             const { data, status } = await axios.get<Book>(`${process.env.NEXT_PUBLIC_API_URL}/api/books/${bookId}`, {
                 headers: {
                     'Authorization': `Bearer ${token}`
@@ -25,7 +26,7 @@ export function useBookData(bookId: string) {
 
         getBookData();
 
-    }, [bookId, clerk]);
+    }, [bookId, clerk, tokenOverwrite]);
 
     return bookData;
 }

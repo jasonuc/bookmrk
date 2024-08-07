@@ -16,7 +16,7 @@ export default function AddNewBookPage() {
           </CardHeader>
           <CardContent>
             <div className="grid gap-4 pb-2">
-              <AddBookForm setDialogIsOpen={false} />
+              <AddBookForm />
             </div>
           </CardContent>
         </Card>
