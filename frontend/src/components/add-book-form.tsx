@@ -5,7 +5,7 @@ import { z } from "zod"
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { addBookFormSchema } from "@/schemas/add-book-form.schema";
-import { Status } from "@/types/book.type";
+import { Book, Status } from "@/types/book.type";
 import { Button } from "@/components/ui/button"
 import {
     Form,
@@ -28,6 +28,8 @@ import FileUploader from "./file-uploader";
 import { Rating } from "@smastrom/react-rating";
 import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
+import axios from "axios";
+import { useClerk, useUser } from "@clerk/nextjs";
 
 interface AddBookFormProps {
     setDialogIsOpen: false | ((isOpen: boolean) => void);
@@ -37,7 +39,11 @@ interface AddBookFormProps {
 export default function AddBookForm({ setDialogIsOpen, isOnInterceptedRoute = false }: AddBookFormProps) {
 
     const { toast } = useToast();
+    
     const router = useRouter();
+    
+    const { user }  = useUser();
+    const clerk = useClerk();
 
     const form = useForm<z.infer<typeof addBookFormSchema>>({
         resolver: zodResolver(addBookFormSchema),
@@ -49,15 +55,35 @@ export default function AddBookForm({ setDialogIsOpen, isOnInterceptedRoute = fa
         }
     })
 
-    function onSubmit(values: z.infer<typeof addBookFormSchema>) {
+    async function onSubmit(values: z.infer<typeof addBookFormSchema>) {
         // Do something with the form values.
         console.log(values); // Prints the form values
+        console.log(user?.id);
+        const token = await clerk.session?.getToken();
+        console.log(token);
+
+        const { data, status } = await axios.post<Book>(`${process.env.NEXT_PUBLIC_API_URL}/api/books`, {
+            ...values,
+            userId: user?.id
+        }, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+
 
         // Notifies the user that the book has been added
-        toast({
-            title: 'Book Added 🎉',
-            description: `${values.title} has been added!`
-        });
+        if (status === 201) {
+            toast({
+                title: 'Book Added 🎉',
+                description: `${data.title} has been added!`
+            });    
+        } else {
+            toast({
+                title: 'There was an issue 🙁',
+                description: `Please try again.`
+            })
+        }
 
         // Closes the dialog if it is open ( which means it's currently using the parallel intercepted route )
         isOnInterceptedRoute && (setDialogIsOpen as Function)(false);
@@ -65,8 +91,8 @@ export default function AddBookForm({ setDialogIsOpen, isOnInterceptedRoute = fa
         // Reset form
         form.reset()
 
-        // refresh page as it is the only way i know how to clear the contents of the fileuploader component
-        !isOnInterceptedRoute && router.refresh();
+        // take user home as it is the only way i know how to clear the contents of the fileuploader component
+        router.push('/home');
     }
 
 

@@ -88,14 +88,14 @@ export default async function BookPage({ params }: { params: { id: string } }) {
           </BlurFade>
 
           <BlurFade delay={blurFadeDelay()}>
-            <div className="w-full h-full border flex">
+            <div className="w-full h-full border hidden md:flex">
               <Image src={imageUrl} width={300} height={300} className="object-fill grow"  alt="Image" />
             </div>
           </BlurFade>
         </div>
 
         <BlurFade delay={blurFadeDelay()}>
-          <div className="bg-muted-foreground w-full h-full" />
+          <div className="bg-muted-foreground/20 w-full h-full" />
         </BlurFade>
 
       </div>
