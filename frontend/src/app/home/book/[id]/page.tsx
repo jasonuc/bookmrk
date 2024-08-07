@@ -8,6 +8,7 @@ import { format } from "date-fns";
 import axios from "axios";
 import SparklesText from "@/components/magicui/sparkles-text";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 
 async function getBookData(bookId: string): Promise<Book> {
   const { getToken } = auth();
@@ -40,7 +41,7 @@ export default async function BookPage({ params }: { params: { id: string } }) {
   const { userId: viewerUserId } = auth()
   const blurFadeDelay = makeDelay("Blur Fade Component's Delay", 0.1, 0.1);
 
-  const { title, rating, status, lastUpdated, dateAdded, userId, user } = book;
+  const { title, rating, status, lastUpdated, dateAdded, userId, user, imageUrl } = book;
 
   return (
     <div className="p-5 md:p-10 flex flex-col items-start space-y-8 md:space-y-10 grow">
@@ -57,7 +58,7 @@ export default async function BookPage({ params }: { params: { id: string } }) {
         </div>
       </BlurFade>
 
-      <div className={cn("pb-5 grid grid-cols-1 md:grid-rows-1 md:grid-cols-2 gap-y-5 w-full h-full text-lg", {
+      <div className={cn("pb-5 grid grid-cols-1 md:grid-rows-1 md:grid-cols-2 gap-5 w-full h-full text-lg", {
         "grid-rows-[25%_75%]": viewerUserId !== userId,
         "grid-rows-[20%_80%]": viewerUserId === userId,
       })}>
@@ -77,12 +78,18 @@ export default async function BookPage({ params }: { params: { id: string } }) {
               <p className="font-semibold">{`Added @ ${format(new Date(dateAdded), "dd/MM/yyyy")}`}</p>
             </div>
           </BlurFade>
-          
+
           <BlurFade delay={blurFadeDelay()}>
             <div className="flex space-x-3 items-center">
-              { viewerUserId !== userId && (
+              {viewerUserId !== userId && (
                 <div className="flex space-x-1"><span>Added by </span><SparklesText sparklesCount={2} as={<span />} text={user?.username} className="text-lg" /></div>
               )}
+            </div>
+          </BlurFade>
+
+          <BlurFade delay={blurFadeDelay()}>
+            <div className="w-full h-full border flex">
+              <Image src={imageUrl} width={300} height={300} className="object-fill grow"  alt="Image" />
             </div>
           </BlurFade>
         </div>
