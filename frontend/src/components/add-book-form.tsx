@@ -25,7 +25,7 @@ import {
 } from "@/components/ui/select"
 import { Input } from "@/components/ui/input";
 import FileUploader from "./file-uploader";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CheckCircle2Icon } from "lucide-react";
 import { Rating } from "@smastrom/react-rating";
 import { useToast } from "@/components/ui/use-toast";
@@ -40,6 +40,14 @@ export default function AddBookForm({ setDialogIsOpen, isOnInterceptedRoute = fa
     const { toast } = useToast()
 
     const [fileUploaded, setFileUploaded] = useState<boolean>(false)
+
+
+    useEffect(() => {
+        setInterval(() => {
+            setFileUploaded(false);
+        }, 2500)
+        
+    }, [fileUploaded])
 
     const form = useForm<z.infer<typeof addBookFormSchema>>({
         resolver: zodResolver(addBookFormSchema),
@@ -63,6 +71,14 @@ export default function AddBookForm({ setDialogIsOpen, isOnInterceptedRoute = fa
 
         // Closes the dialog if it is open ( which means it's currently using the parallel intercepted route )
         isOnInterceptedRoute && (setDialogIsOpen as Function)(false);
+
+        // Reset form
+        form.reset()
+
+        // refresh page as it is the only way i know how to clear the contents of the fileuploader component
+        !isOnInterceptedRoute && setInterval(() => {
+            window.location.reload() 
+        }, 2000)
     }
 
 

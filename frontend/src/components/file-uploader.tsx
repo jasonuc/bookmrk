@@ -1,5 +1,5 @@
 "use client";
-import { FileUploaderRegular, UploadcareFile, OutputFileEntry } from "@uploadcare/react-uploader";
+import { FileUploaderRegular, OutputFileEntry } from "@uploadcare/react-uploader";
 
 interface FileUploaderProps {
     setFileUploaded: (uploaded: boolean) => void;
