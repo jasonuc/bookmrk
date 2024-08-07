@@ -1,18 +1,22 @@
 "use client";
 import { FileUploaderRegular, OutputFileEntry } from "@uploadcare/react-uploader";
+import { CheckCircle2Icon } from "lucide-react";
+import { useState } from "react";
 
 interface FileUploaderProps {
-    setFileUploaded: (uploaded: boolean) => void;
-    value: string | undefined;
+    value?: string | undefined;
     onChange: (url: string) => void;
 }
 
-export default function FileUploader({ setFileUploaded, value, onChange }: FileUploaderProps) {
+export default function FileUploader({ onChange }: FileUploaderProps) {
+
+    const [fileUploaded, setFileUploaded] = useState<boolean>(false)
 
     return (
-        <div>
+        <div className="relative w-fit flex space-x-3 items-center">
             <FileUploaderRegular
                 pubkey="822c5b92b05043b370da"
+                ctxName="form-image-url-upload"
                 maxLocalFileSizeBytes={5000000}
                 multiple={false}
                 imgOnly={true}
@@ -25,6 +29,8 @@ export default function FileUploader({ setFileUploaded, value, onChange }: FileU
                     setFileUploaded(true);
                 }}
             />
+
+            {fileUploaded && <CheckCircle2Icon color="#15803d" />}
         </div>
     );
 }

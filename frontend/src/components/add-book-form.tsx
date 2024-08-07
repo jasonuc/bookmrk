@@ -25,10 +25,9 @@ import {
 } from "@/components/ui/select"
 import { Input } from "@/components/ui/input";
 import FileUploader from "./file-uploader";
-import { useEffect, useState } from "react";
-import { CheckCircle2Icon } from "lucide-react";
 import { Rating } from "@smastrom/react-rating";
 import { useToast } from "@/components/ui/use-toast";
+import { useRouter } from "next/navigation";
 
 interface AddBookFormProps {
     setDialogIsOpen: false | ((isOpen: boolean) => void);
@@ -37,17 +36,8 @@ interface AddBookFormProps {
 
 export default function AddBookForm({ setDialogIsOpen, isOnInterceptedRoute = false }: AddBookFormProps) {
 
-    const { toast } = useToast()
-
-    const [fileUploaded, setFileUploaded] = useState<boolean>(false)
-
-
-    useEffect(() => {
-        setInterval(() => {
-            setFileUploaded(false);
-        }, 2500)
-        
-    }, [fileUploaded])
+    const { toast } = useToast();
+    const router = useRouter();
 
     const form = useForm<z.infer<typeof addBookFormSchema>>({
         resolver: zodResolver(addBookFormSchema),
@@ -62,7 +52,7 @@ export default function AddBookForm({ setDialogIsOpen, isOnInterceptedRoute = fa
     function onSubmit(values: z.infer<typeof addBookFormSchema>) {
         // Do something with the form values.
         console.log(values); // Prints the form values
-        
+
         // Notifies the user that the book has been added
         toast({
             title: 'Book Added 🎉',
@@ -76,9 +66,7 @@ export default function AddBookForm({ setDialogIsOpen, isOnInterceptedRoute = fa
         form.reset()
 
         // refresh page as it is the only way i know how to clear the contents of the fileuploader component
-        !isOnInterceptedRoute && setInterval(() => {
-            window.location.reload() 
-        }, 2000)
+        !isOnInterceptedRoute && router.refresh();
     }
 
 
@@ -110,10 +98,7 @@ export default function AddBookForm({ setDialogIsOpen, isOnInterceptedRoute = fa
                             <FormItem>
                                 <FormLabel>Image</FormLabel>
                                 <FormControl>
-                                    <div className="relative w-fit flex space-x-3 items-center">
-                                        <FileUploader setFileUploaded={setFileUploaded} value={field.value} onChange={field.onChange} />
-                                        {fileUploaded && <CheckCircle2Icon color="#15803d" />}
-                                    </div>
+                                    <FileUploader value={field.value} onChange={field.onChange} />
                                 </FormControl>
                                 <FormDescription>
                                     Here you can add an image that captures the book{"'"}s vibe.
