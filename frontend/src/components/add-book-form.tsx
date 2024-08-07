@@ -57,10 +57,10 @@ export default function AddBookForm({ setDialogIsOpen, isOnInterceptedRoute = fa
 
     async function onSubmit(values: z.infer<typeof addBookFormSchema>) {
         // Do something with the form values.
-        console.log(values); // Prints the form values
-        console.log(user?.id);
+        // console.log(values); // Prints the form values
+        // console.log(user?.id);
         const token = await clerk.session?.getToken();
-        console.log(token);
+        // console.log(token);
 
         const { data, status } = await axios.post<Book>(`${process.env.NEXT_PUBLIC_API_URL}/api/books`, {
             ...values,

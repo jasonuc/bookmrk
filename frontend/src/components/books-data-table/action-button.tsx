@@ -1,5 +1,4 @@
 "use client";
-
 import { BookOpen, Eye, FolderOpen, MoreHorizontal, Pen, ShareIcon, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -32,7 +31,7 @@ export default function ActionButton({ book }: { book: Book }) {
 
                 <DropdownMenuItem className="space-x-2" onClick={
                     () => {
-                        router.push(`/home/book/${book.id}`)
+                        router.push(`/home/book/${book.id}`);
                     }
                 }>
                     <FolderOpen className="w-4 h-4" />
@@ -59,9 +58,11 @@ export default function ActionButton({ book }: { book: Book }) {
                     <p>View notes</p>
                 </DropdownMenuItem> */}
 
-                <DropdownMenuItem className="space-x-2">
+                <DropdownMenuItem className="space-x-2" onClick={() => {
+                    router.push(`/home/book/${book.id}/add-note`);
+                }}>
                     <Pen className="w-4 h-4" />
-                    <p>Write note</p>
+                    <p>Add note</p>
                 </DropdownMenuItem>
 
                 <DropdownMenuSeparator />
