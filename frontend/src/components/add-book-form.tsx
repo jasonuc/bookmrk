@@ -31,7 +31,7 @@ import { Rating } from "@smastrom/react-rating";
 import { useToast } from "@/components/ui/use-toast";
 
 interface AddBookFormProps {
-    setDialogIsOpen: (isOpen: boolean) => void;
+    setDialogIsOpen: false | ((isOpen: boolean) => void);
     isOnInterceptedRoute?: boolean;
 }
 
@@ -62,7 +62,7 @@ export default function AddBookForm({ setDialogIsOpen, isOnInterceptedRoute = fa
         });
 
         // Closes the dialog if it is open ( which means it's currently using the parallel intercepted route )
-        isOnInterceptedRoute && setDialogIsOpen(false);
+        isOnInterceptedRoute && (setDialogIsOpen as Function)(false);
     }
 
 
@@ -153,7 +153,9 @@ export default function AddBookForm({ setDialogIsOpen, isOnInterceptedRoute = fa
                         )}
                     />
 
-                    <Button type="submit">Submit</Button>
+                    <div className="w-full pt-5">
+                        <Button type="submit" className="float-right">Submit</Button>
+                    </div>
                 </form>
             </Form>
         </div>
