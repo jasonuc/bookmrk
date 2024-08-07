@@ -1,6 +1,11 @@
 import { User } from "./user.type";
 
-export type Status = "READING" | "TBR" | "DNF" | "FINISHED";
+export enum Status {
+    READING="READING",
+    TBR="TBR",
+    DNF="DNF",
+    FINISHED="FINISHED",
+};
 
 export type Book = {
     id: string;
