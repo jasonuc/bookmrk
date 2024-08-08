@@ -93,6 +93,7 @@ export default function AddBookForm({ setDialogIsOpen, isOnInterceptedRoute = fa
 
         // take user home as it is the only way i know how to clear the contents of the fileuploader component
         router.push('/home');
+        router.refresh();
     }
 
 

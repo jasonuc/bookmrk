@@ -12,7 +12,7 @@ export function useBookData(bookId: string, tokenOverwrite?: string) {
 
         async function getBookData(): Promise<Book | null> {
             const token = tokenOverwrite ? tokenOverwrite : await clerk.session?.getToken();
-            console.log(token);
+            // console.log(token);
             const { data, status } = await axios.get<Book>(`${process.env.NEXT_PUBLIC_API_URL}/api/books/${bookId}`, {
                 headers: {
                     'Authorization': `Bearer ${token}`

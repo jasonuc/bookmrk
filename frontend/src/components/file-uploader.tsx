@@ -24,7 +24,7 @@ export default function FileUploader({ onChange }: FileUploaderProps) {
                 classNameUploader="my-file-uploader-config"
                 onFileUploadSuccess={(file: OutputFileEntry) => {
                     const url = file.cdnUrl as string;
-                    console.log(url);
+                    // console.log(url);
                     onChange(url);
                     setFileUploaded(true);
                 }}
