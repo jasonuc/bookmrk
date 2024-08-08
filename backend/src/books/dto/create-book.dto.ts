@@ -5,7 +5,6 @@ import {
   IsNumber,
   IsOptional,
   IsString,
-  IsUrl,
   Max,
   Min,
 } from 'class-validator';
@@ -17,7 +16,6 @@ export class CreateBookDto {
 
   @IsOptional()
   @IsString()
-  @IsUrl()
   imageUrl: string;
 
   @IsOptional()
