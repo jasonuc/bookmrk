@@ -11,6 +11,6 @@ async function bootstrap() {
   app.setGlobalPrefix('/api');
   app.use(cookieParser());
 
-  await app.listen(8000);
+  await app.listen(process.env.PORT);
 }
 bootstrap();
