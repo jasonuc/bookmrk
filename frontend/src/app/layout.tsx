@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode; }>) {
 
   return (
-    <ClerkProvider signInFallbackRedirectUrl={'/home'} signUpFallbackRedirectUrl={'/home'}>
+    <ClerkProvider afterSignOutUrl={'/'} signInFallbackRedirectUrl={'/home'} signUpFallbackRedirectUrl={'/home'}>
       <TooltipProvider>
         <html lang="en">
           <body className={cn(lato.variable, 'font-lato relative flex h-screen w-full flex-col text-black bg-foreground/5')}>
