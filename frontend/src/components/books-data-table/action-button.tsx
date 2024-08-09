@@ -12,11 +12,34 @@ import {
 import { Book } from "@/types/book.type";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/components/ui/use-toast";
+import axios from "axios";
+import { useClerk } from "@clerk/nextjs";
+import { NextApiResponse } from "next";
+import { title } from "process";
 
 export default function ActionButton({ book }: { book: Book }) {
 
     const router = useRouter();
     const { toast } = useToast()
+
+    const clerk = useClerk();
+
+    const handleDeleteBookButtonClick = async () => {
+        const token = await clerk.session?.getToken();
+
+        const { status } = await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/api/books/${book.id}`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+
+        if (status === 200) {
+            toast({
+                title: `🚮 ${book.title} had been deleted`,
+            });
+            router.refresh();
+        }
+    }
 
     return (
         <DropdownMenu>
@@ -74,7 +97,8 @@ export default function ActionButton({ book }: { book: Book }) {
 
                 <DropdownMenuSeparator />
 
-                <DropdownMenuItem className="space-x-2 !text-red-700">
+                <DropdownMenuItem className="space-x-2 !text-red-700"
+                onClick={handleDeleteBookButtonClick}>
                     <Trash2 className="w-4 h-4" />
                     <p>Delete book</p>
                 </DropdownMenuItem>
