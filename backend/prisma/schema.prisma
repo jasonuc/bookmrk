@@ -46,8 +46,8 @@ model BookShelf {
   id      String @id @default(uuid())
   bookId  String
   shelfId String
-  book    Book   @relation(fields: [bookId], references: [id])
-  shelf   Shelf  @relation(fields: [shelfId], references: [id])
+  book    Book   @relation(fields: [bookId], references: [id], onDelete: Cascade)
+  shelf   Shelf  @relation(fields: [shelfId], references: [id], onDelete: Cascade)
 }
 
 model Note {
@@ -55,7 +55,7 @@ model Note {
   content   String
   bookId    String
   createdAt DateTime @default(now())
-  book      Book     @relation(fields: [bookId], references: [id])
+  book      Book     @relation(fields: [bookId], references: [id], onDelete: Cascade)
 }
 
 enum Status {
