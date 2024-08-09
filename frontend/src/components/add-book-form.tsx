@@ -6,7 +6,6 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { addBookFormSchema } from "@/schemas/add-book-form.schema";
 import { Book, Status } from "@/types/book.type";
-import { Button } from "@/components/ui/button"
 import {
     Form,
     FormControl,
@@ -30,6 +29,8 @@ import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import { useClerk, useUser } from "@clerk/nextjs";
+import { useEffect, useState } from "react";
+import SharedFormFooter from "./shared-form-footer";
 
 interface AddBookFormProps {
     setDialogIsOpen?: ((isOpen: boolean) => void);
@@ -39,11 +40,17 @@ interface AddBookFormProps {
 export default function AddBookForm({ setDialogIsOpen, isOnInterceptedRoute = false }: AddBookFormProps) {
 
     const { toast } = useToast();
-    
+
     const router = useRouter();
-    
-    const { user }  = useUser();
+
+    const { user } = useUser();
     const clerk = useClerk();
+
+    const [isMounted, setIsMounted] = useState(false);
+
+    useEffect(() => {
+        setIsMounted(true);
+    }, [])
 
     const form = useForm<z.infer<typeof addBookFormSchema>>({
         resolver: zodResolver(addBookFormSchema),
@@ -77,7 +84,7 @@ export default function AddBookForm({ setDialogIsOpen, isOnInterceptedRoute = fa
             toast({
                 title: 'Book Added 🎉',
                 description: `${data.title} has been added!`
-            });    
+            });
         } else {
             toast({
                 title: 'There was an issue 🙁',
@@ -96,6 +103,7 @@ export default function AddBookForm({ setDialogIsOpen, isOnInterceptedRoute = fa
         router.refresh();
     }
 
+    if (!isMounted) return null;
 
     return (
         <div>
@@ -181,9 +189,7 @@ export default function AddBookForm({ setDialogIsOpen, isOnInterceptedRoute = fa
                         )}
                     />
 
-                    <div className="w-full pt-5">
-                        <Button type="submit" className="float-right">Submit</Button>
-                    </div>
+                    <SharedFormFooter isOnInterceptedRoute={isOnInterceptedRoute} />
                 </form>
             </Form>
         </div>
