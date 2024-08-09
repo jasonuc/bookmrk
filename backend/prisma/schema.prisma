@@ -30,8 +30,8 @@ model Book {
   status      Status   @default(READING)
   user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId      String
-  shelf       Shelf?   @relation(fields: [shelfId], references: [id])
-  shelfId     String?
+  shelf       Shelf    @relation(fields: [shelfId], references: [id])
+  shelfId     String
 }
 
 model Shelf {
