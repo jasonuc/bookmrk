@@ -20,34 +20,27 @@ model User {
 }
 
 model Book {
-  id          String      @id @default(uuid())
-  title       String // IN-DTO
-  imageUrl    String? // IN-DTO
-  rating      Int         @default(0) // IN-DTO
+  id          String   @id @default(uuid())
+  title       String
+  imageUrl    String?
+  rating      Int      @default(0)
   notes       Note[]
-  dateAdded   DateTime    @default(now())
-  lastUpdated DateTime    @updatedAt
-  status      Status      @default(READING) // IN-DTO
-  user        User        @relation(fields: [userId], references: [id])
-  userId      String // IN-DTO
-  bookShelf   BookShelf[]
+  dateAdded   DateTime @default(now())
+  lastUpdated DateTime @updatedAt
+  status      Status   @default(READING)
+  user        User     @relation(fields: [userId], references: [id])
+  userId      String
+  shelf       Shelf?   @relation(fields: [shelfId], references: [id])
+  shelfId     String?
 }
 
 model Shelf {
-  id          String      @id @default(uuid())
+  id          String @id @default(uuid())
   name        String
   description String
-  user        User?       @relation(fields: [userId], references: [id])
+  user        User?  @relation(fields: [userId], references: [id])
   userId      String
-  bookShelf   BookShelf[]
-}
-
-model BookShelf {
-  id      String @id @default(uuid())
-  bookId  String
-  shelfId String
-  book    Book   @relation(fields: [bookId], references: [id], onDelete: Cascade)
-  shelf   Shelf  @relation(fields: [shelfId], references: [id], onDelete: Cascade)
+  book        Book[]
 }
 
 model Note {
