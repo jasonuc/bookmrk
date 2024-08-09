@@ -7,6 +7,7 @@ export class BookEntity implements Book {
   rating: number;
   status: Status;
   userId: string;
+  shelfId: string;
   lastUpdated: Date;
   dateAdded: Date;
 }
