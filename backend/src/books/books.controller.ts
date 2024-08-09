@@ -47,8 +47,8 @@ export class BooksController {
     return await this.booksService.deleteOneBook(id);
   }
 
-  @Delete()
-  async deleteAllUserBooks(@UserId() userId: string) {
+  @Delete('user/:userId')
+  async deleteAllUserBooks(@Param('userId') userId: string) {
     return await this.booksService.deleteAllUserBooks(userId);
   }
 }
