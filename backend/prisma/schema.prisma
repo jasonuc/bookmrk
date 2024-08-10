@@ -38,7 +38,7 @@ model Shelf {
   id          String @id @default(uuid())
   name        String
   description String
-  user        User?  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user        User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId      String
   book        Book[]
 }
