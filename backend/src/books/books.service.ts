@@ -3,6 +3,7 @@ import { CreateBookDto } from './dto/create-book.dto';
 import { UpdateBookDto } from './dto/update-book.dto';
 import { PrismaService } from '@/prisma/prisma.service';
 import { UsersService } from '@/users/users.service';
+import { MY_BOOKSHELF } from '@/utils/constants';
 
 @Injectable()
 export class BooksService {
@@ -24,7 +25,7 @@ export class BooksService {
           connectOrCreate: {
             where: { id: shelfId },
             create: {
-              name: 'My Bookshelf',
+              name: MY_BOOKSHELF,
               description: 'My literary universe.',
               user: {
                 connect: { id: userId },

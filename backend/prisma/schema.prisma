@@ -30,17 +30,19 @@ model Book {
   status      Status   @default(READING)
   user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId      String
-  shelf       Shelf    @relation(fields: [shelfId], references: [id])
+  shelf       Shelf    @relation(fields: [shelfId], references: [id], onDelete: Restrict)
   shelfId     String
 }
 
 model Shelf {
-  id          String @id @default(uuid())
+  id          String  @id @default(uuid())
   name        String
-  description String
-  user        User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  description String? @default("Another literary universe.")
+  user        User    @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId      String
   book        Book[]
+
+  @@unique([name, userId])
 }
 
 model Note {

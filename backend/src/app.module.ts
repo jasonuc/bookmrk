@@ -6,6 +6,7 @@ import { WebhooksModule } from './webhooks/webhooks.module';
 import { BooksModule } from './books/books.module';
 import { AppController } from './app.controller';
 import { NotesModule } from './notes/notes.module';
+import { ShelvesModule } from './shelves/shelves.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { NotesModule } from './notes/notes.module';
     UsersModule,
     BooksModule,
     NotesModule,
+    ShelvesModule,
   ],
   controllers: [AppController],
   providers: [],
