@@ -90,7 +90,10 @@ export default function ActionButton({ book }: { book: Book }) {
 
                 <DropdownMenuSeparator />
 
-                <DropdownMenuItem className="space-x-2">
+                <DropdownMenuItem className="space-x-2" onClick={
+                    () => {
+                        router.push(`/home/book/${book.id}/edit`);
+                    }}>
                     <BookOpen className="w-4 h-4" />
                     <p>Edit book details</p>
                 </DropdownMenuItem>
