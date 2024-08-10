@@ -12,8 +12,27 @@ export class BooksService {
   ) {}
 
   async createNewBook(createBookDto: CreateBookDto) {
+    const { userId, shelfId, ...bookData } = createBookDto;
+
     const newBook = await this.prisma.book.create({
-      data: { ...createBookDto },
+      data: {
+        ...bookData,
+        user: {
+          connect: { id: userId },
+        },
+        shelf: {
+          connectOrCreate: {
+            where: { id: shelfId },
+            create: {
+              name: 'My Bookshelf',
+              description: 'My literary universe.',
+              user: {
+                connect: { id: userId },
+              },
+            },
+          },
+        },
+      },
     });
 
     return newBook;
