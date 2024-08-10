@@ -1,4 +1,4 @@
-export default function HomeLayout({ children, addBook, addNote }: { children: React.ReactNode; addBook: React.ReactNode; addNote: React.ReactNode }) {
+export default function HomeLayout({ children, addBook, addNote, editBook }: { children: React.ReactNode; addBook: React.ReactNode; addNote: React.ReactNode; editBook: React.ReactNode }) {
   return (
     <>
     {children}
@@ -6,6 +6,8 @@ export default function HomeLayout({ children, addBook, addNote }: { children: R
     {addBook}
     
     {addNote}
+    
+    {editBook}
     </>
   )
 }
