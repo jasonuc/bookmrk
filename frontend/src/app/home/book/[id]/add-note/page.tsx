@@ -1,11 +1,8 @@
 import AddNoteForm from "@/components/add-note-form";
 import BlurFade from "@/components/magicui/blur-fade";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { useBookData } from "@/hooks/use-book-data";
-import { Book } from "@/types/book.type";
-import { useClerk } from "@clerk/nextjs";
+import { getBook } from "@/lib/get-book";
 import { auth } from "@clerk/nextjs/server";
-import axios from "axios";
 import { redirect } from "next/navigation";
 
 interface AddNotePageProps {
@@ -18,11 +15,7 @@ export default async function AddNotePage({ params }: AddNotePageProps) {
 
   const { getToken, userId } = auth();
   const token = await getToken();
-  const { data: book } = await axios.get<Book>(`${process.env.NEXT_PUBLIC_API_URL}/api/books/${bookId}`, {
-    headers: {
-      'Authorization': `Bearer ${token}`
-    }
-  });
+  const { book } = await getBook(bookId, token!);
 
   if (book.userId !== userId) redirect('/home');
 
