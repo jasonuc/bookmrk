@@ -29,6 +29,10 @@ export class CreateBookDto {
   @IsEnum(Status)
   status: Status;
 
+  @IsOptional()
+  @IsString()
+  shelfId: string;
+
   @IsNotEmpty()
   @IsString()
   userId: string;
