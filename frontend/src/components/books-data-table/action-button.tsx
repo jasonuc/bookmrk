@@ -35,7 +35,7 @@ export default function ActionButton({ book }: { book: Book }) {
 
         if (status === 200) {
             toast({
-                title: `🚮 ${book.title} had been deleted`,
+                title: `🚮 ${book.title} has been deleted`,
             });
             router.refresh();
         }
