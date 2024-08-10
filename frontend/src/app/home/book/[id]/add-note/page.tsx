@@ -6,6 +6,7 @@ import { Book } from "@/types/book.type";
 import { useClerk } from "@clerk/nextjs";
 import { auth } from "@clerk/nextjs/server";
 import axios from "axios";
+import { redirect } from "next/navigation";
 
 interface AddNotePageProps {
   params: { id: string };
@@ -15,13 +16,15 @@ export default async function AddNotePage({ params }: AddNotePageProps) {
 
   const { id: bookId } = params;
 
-  const { getToken } = auth();
+  const { getToken, userId } = auth();
   const token = await getToken();
   const { data: book } = await axios.get<Book>(`${process.env.NEXT_PUBLIC_API_URL}/api/books/${bookId}`, {
     headers: {
       'Authorization': `Bearer ${token}`
     }
   });
+
+  if (book.userId !== userId) redirect('/home');
 
   return (
     <div className="w-full h-full flex items-center justify-center">
