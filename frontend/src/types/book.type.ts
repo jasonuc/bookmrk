@@ -1,3 +1,4 @@
+import { Shelf } from "./shelf.type";
 import { User } from "./user.type";
 
 export enum Status {
@@ -14,7 +15,9 @@ export type Book = {
     rating: number;
     status: Status;
     userId: string;
+    shelfId: string;
     lastUpdated: Date;
     dateAdded: Date;
     user: User;
+    shelf: Shelf;
 }
