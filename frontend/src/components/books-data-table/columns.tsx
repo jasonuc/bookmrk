@@ -7,11 +7,20 @@ import FormattedStatus from "@/components/formatted-status";
 import TableHeader from "./table-header";
 import ActionButton from "./action-button";
 import { format } from "date-fns";
+import { Shelf } from "@/types/shelf.type";
+import ShelfNameDisplay from "../shelf-name-display";
 
 export const booksColumns: ColumnDef<Book>[] = [
   {
     accessorKey: "title",
     header: () => <TableHeader header="Title" />,
+    cell: ({ row }) => {
+      const title: string = row.getValue("title");
+
+      return (<p className="whitespace-nowrap w-10 md:w-[20rem] overflow-scroll [&::-webkit-scrollbar]:hidden">
+        {title}
+      </p>)
+    }
   },
   {
     accessorKey: "status",
@@ -19,6 +28,15 @@ export const booksColumns: ColumnDef<Book>[] = [
     cell: ({ row }) => {
       const status: Status = row.getValue("status");
       return <FormattedStatus status={status} />
+    }
+  },
+  {
+    accessorKey: "shelf",
+    header: () => <TableHeader header="Shelf" />,
+    cell: ({ row }) => {
+      const shelf: Shelf = row.getValue('shelf');
+
+      return (<ShelfNameDisplay shelf={shelf} />)
     }
   },
   {
@@ -30,15 +48,6 @@ export const booksColumns: ColumnDef<Book>[] = [
         className="max-w-[80px]"
         value={rating}
         readOnly />)
-    }
-  },
-  {
-    accessorKey: "lastUpdated",
-    header: () => <TableHeader header="Last Updated" />,
-    cell: ({ row }) => {
-      const lastUpdated = format(new Date(row.getValue("lastUpdated")), 'dd/MM/yyyy');
-
-      return <p>{`${lastUpdated}`}</p>;
     }
   },
   {

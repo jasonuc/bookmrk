@@ -15,6 +15,16 @@ export default function HomeButtonSection({ className }: HomeButtonSectionProps)
                     {"Manage Book Shelves 🗂️"}
                 </Button>
             </Link>
+            
+            {/* TODO: implement book shelf functionality */}
+            <Link href={'/home/add-book'}>
+                    <Button
+                        variant="outline"
+                        size="sm"
+                    >
+                        {"Add Book 📕"}
+                    </Button>
+                </Link>
         </section>
     )
 }

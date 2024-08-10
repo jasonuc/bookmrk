@@ -29,8 +29,9 @@ import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import { useClerk, useUser } from "@clerk/nextjs";
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import SharedFormFooter from "./shared-form-footer";
+import { Shelf } from "@/types/shelf.type";
 
 interface AddBookFormProps {
     setDialogIsOpen?: ((isOpen: boolean) => void);
@@ -46,11 +47,31 @@ export default function AddBookForm({ setDialogIsOpen, isOnInterceptedRoute = fa
     const { user } = useUser();
     const clerk = useClerk();
 
+    const [shelves, setShelves] = useState<Shelf[]>();
+
     const [isMounted, setIsMounted] = useState(false);
 
     useEffect(() => {
         setIsMounted(true);
     }, [])
+
+    useLayoutEffect(() => {
+        const getShelves = async () => {
+
+            const token = await clerk.session?.getToken();
+
+            const { data: shelves } = await axios.get<Shelf[]>(`${process.env.NEXT_PUBLIC_API_URL}/api/shelves/user/${user?.id}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+
+            setShelves(shelves);
+        }
+        
+        getShelves();
+
+    }, [clerk.session, user?.id])
 
     const form = useForm<z.infer<typeof addBookFormSchema>>({
         resolver: zodResolver(addBookFormSchema),
@@ -183,6 +204,32 @@ export default function AddBookForm({ setDialogIsOpen, isOnInterceptedRoute = fa
                                 </Select>
                                 <FormDescription>
                                     For you noobs, TBR: To Be Read | DNF: Did Not Finish
+                                </FormDescription>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+
+                    <FormField
+                        control={form.control}
+                        name="shelfId"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Shelf</FormLabel>
+                                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                    <FormControl>
+                                        <SelectTrigger>
+                                            <SelectValue placeholder="Which bookshelf is this gonna go in?" />
+                                        </SelectTrigger>
+                                    </FormControl>
+                                    <SelectContent>
+                                        { shelves?.map((shelf, key) => (
+                                            <SelectItem key={key} value={shelf.id}>{shelf.name}</SelectItem>
+                                        )) }
+                                    </SelectContent>
+                                </Select>
+                                <FormDescription>
+                                    Which bookshelf is this gonna go in?
                                 </FormDescription>
                                 <FormMessage />
                             </FormItem>

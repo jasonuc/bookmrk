@@ -96,16 +96,8 @@ export default function BooksDataTable<TData, TValue>({ columns, data }: DataTab
                 </TableBody>
             </Table>
 
-            <div className="flex items-center justify-between px-4 py-4">
-                <Link href={'/home/add-book'}>
-                    <Button
-                        variant="outline"
-                        size="sm"
-                    >
-                        {"Add Book 📕"}
-                    </Button>
-                </Link>
-
+            <div className="flex items-center justify-end px-4 py-4">
+                
                 <div className='flex space-x-2'>
                     <Button
                         variant="outline"
