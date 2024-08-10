@@ -42,6 +42,7 @@ export class BooksService {
   async findAllBooksByUserId(userId: string) {
     const userBooks = await this.prisma.book.findMany({
       where: { userId },
+      include: { shelf: true },
     });
 
     return userBooks;
@@ -54,6 +55,7 @@ export class BooksService {
         user: {
           select: { id: true, username: true },
         },
+        shelf: true,
       },
     });
     if (!book) throw new BadRequestException(`BOOK ID: {${id}} DOES NOT EXIST`);
