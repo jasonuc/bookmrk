@@ -17,7 +17,7 @@ export const booksColumns: ColumnDef<Book>[] = [
     cell: ({ row }) => {
       const title: string = row.getValue("title");
 
-      return (<p className="whitespace-nowrap w-10 md:w-[20rem] overflow-scroll [&::-webkit-scrollbar]:hidden">
+      return (<p className="whitespace-nowrap w-10 md:w-fit md:max-w-[25rem] overflow-scroll [&::-webkit-scrollbar]:hidden">
         {title}
       </p>)
     }
