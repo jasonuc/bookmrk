@@ -26,7 +26,7 @@ export default async function ManageShelvesPage() {
   return (
     <div className="pb-10 px-2 md:px-5">
       <ManageShelvesButtonSection />
-      <div className="grid gap-4 md:grid-cols-2 md:gap-3 lg:grid-cols-3 mx-auto max-w-6xl">
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 mx-auto max-w-6xl">
 
         {userShelves.map((shelf, key) => (
           <ShelfDisplayCard key={key} {...shelf} />

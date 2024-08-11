@@ -5,7 +5,6 @@ import { Home } from "lucide-react";
 
 interface ManageShelvesButtonSectionProps extends React.HTMLAttributes<HTMLDivElement> { }
 
-
 export default function ManageShelvesButtonSection({ className }: ManageShelvesButtonSectionProps) {
     return (
         <section className={cn("mx-auto w-full flex gap-x-3.5 items-center justify-end mb-3 max-w-6xl", className)}>
@@ -18,7 +17,7 @@ export default function ManageShelvesButtonSection({ className }: ManageShelvesB
                 </Button>
             </Link>
 
-            <Link href={'/home/add-shelf'}>
+            <Link href={'/home/manage-shelves/add'}>
                 <Button
                     variant="outline"
                     size="sm">
