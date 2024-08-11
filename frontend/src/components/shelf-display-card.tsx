@@ -57,7 +57,7 @@ export default function ShelfDisplayCard({ id, name, description, colour, userId
         <Card className="p-2 md:px-3 overflow-hidden relative">
             <CardHeader className="whitespace-nowrap">
                 <CardTitle className="overflow-hidden overflow-ellipsis">{name}</CardTitle>
-                <CardDescription className="italic">{description}</CardDescription>
+                <CardDescription className="italic overflow-hidden overflow-ellipsis">{description}</CardDescription>
                 <div>
                     <div style={{ backgroundColor: colour }} className="absolute border shadow-md size-3 rounded-full top-3 right-3" />
                     <div style={{ backgroundColor: colour }} className="absolute border shadow-md size-3 rounded-full top-6 right-3" />
