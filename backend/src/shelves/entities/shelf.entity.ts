@@ -5,4 +5,5 @@ export class ShelfEntity implements Shelf {
   name: string;
   description: string;
   userId: string;
+  colour: string;
 }

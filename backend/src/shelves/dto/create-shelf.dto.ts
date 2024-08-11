@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { IsHexColor, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 export class CreateShelfDto {
   @IsNotEmpty()
@@ -8,6 +8,10 @@ export class CreateShelfDto {
   @IsOptional()
   @IsString()
   description: string;
+
+  @IsNotEmpty()
+  @IsHexColor()
+  colour: string;
 
   @IsNotEmpty()
   @IsString()
