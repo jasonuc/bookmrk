@@ -27,6 +27,7 @@ export class BooksService {
             create: {
               name: MY_BOOKSHELF,
               description: 'My literary universe.',
+              colour: '#ffffff',
               user: {
                 connect: { id: userId },
               },
