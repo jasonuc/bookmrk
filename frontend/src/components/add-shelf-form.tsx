@@ -14,7 +14,7 @@ import {
 import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
 import { useClerk } from "@clerk/nextjs";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { Textarea } from "./ui/textarea";
 import SharedFormFooter from "./shared-form-footer";
 import { addShelfFormSchema } from "@/schemas/add-shelf-form.schema";
@@ -47,27 +47,31 @@ export default function AddShelfForm({ setDialogIsOpen, isOnInterceptedRoute = f
         // Do something with the form values.
         const token = await clerk.session?.getToken();
 
-        // Send data to the db
-        const { data, status } = await axios.post<Shelf>(`${process.env.NEXT_PUBLIC_API_URL}/api/shelves`, {
-            ...values,
-            userId: clerk.user?.id
-        }, {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        });
-
-        // Notifies the user that the note has been added
-        if (status === 201) {
-            toast({
-                title: 'Shelf Added 🎉',
-                description: `Shelf for ${data.name} has been added!`
+        try {
+            // Send data to the db
+            const { data, status } = await axios.post<Shelf>(`${process.env.NEXT_PUBLIC_API_URL}/api/shelves`, {
+                ...values,
+                userId: clerk.user?.id
+            }, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
             });
-        } else {
+
+            // Notifies the user that the note has been added
+            if (status === 201) {
+                toast({
+                    title: 'Shelf Added 🎉',
+                    description: `Shelf for ${data.name} has been added!`
+                });
+            }
+        } catch (error) {
+            const { response: { data: { message } } } = error as any;
+
             toast({
-                title: 'There was an issue 🙁',
-                description: `Please try again.`
-            })
+                title: '🚫 There was an issue',
+                description: message
+            });
         }
 
         // Closes the dialog
@@ -129,7 +133,7 @@ export default function AddShelfForm({ setDialogIsOpen, isOnInterceptedRoute = f
                                 <FormLabel>Colour</FormLabel>
                                 <FormControl>
                                     <HexColorPicker
-                                     color={field.value} onChange={field.onChange} />
+                                        color={field.value} onChange={field.onChange} />
                                 </FormControl>
                                 <FormDescription>
                                     Colour code for this shelf

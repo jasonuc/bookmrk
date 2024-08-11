@@ -10,17 +10,16 @@ import {
 import { Shelf } from "@/types/shelf.type"
 import { Button } from "./ui/button"
 import { Trash2 } from "lucide-react"
-import axios, { AxiosError } from "axios"
-import { auth } from "@clerk/nextjs/server"
+import axios from "axios"
 import { useToast } from "./ui/use-toast";
 import { useClerk } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
-import { Badge } from "./ui/badge";
-import { cn } from "@/lib/utils";
+import EditShelfButton from "./edit-shelf-button";
+import { MY_BOOKSHELF } from "@/lib/constants";
 
 interface ShelfDisplayCardProps extends Shelf { }
 
-export default function ShelfDisplayCard({ id, name, description, colour, userId: _userId, book: books }: ShelfDisplayCardProps) {
+export default function ShelfDisplayCard({ id, name, description, colour, userId, book: books }: ShelfDisplayCardProps) {
 
     const clerk = useClerk();
     const router = useRouter();
@@ -59,14 +58,20 @@ export default function ShelfDisplayCard({ id, name, description, colour, userId
             <CardHeader className="whitespace-nowrap">
                 <CardTitle className="overflow-hidden overflow-ellipsis">{name}</CardTitle>
                 <CardDescription className="italic">{description}</CardDescription>
-                <div style={{ backgroundColor: colour }} className="absolute border shadow-md size-3 rounded-full top-3 right-3" />
+                <div>
+                    <div style={{ backgroundColor: colour }} className="absolute border shadow-md size-3 rounded-full top-3 right-3" />
+                    <div style={{ backgroundColor: colour }} className="absolute border shadow-md size-3 rounded-full top-6 right-3" />
+                    <div style={{ backgroundColor: colour }} className="absolute border shadow-md size-3 rounded-full top-9 right-3" />
+                </div>
             </CardHeader>
             <CardContent>
                 {books.length ?
                     `This shelf has ${books.length} books`
                     : `This is bookshelf is empty. Go fill it up!`}
             </CardContent>
-            <CardFooter className="flex items-center justify-end">
+            <CardFooter className="flex items-center justify-end gap-x-4">
+                {name !== MY_BOOKSHELF && <EditShelfButton id={id} name={name} description={description} colour={colour} userId={userId} />}
+
                 <Button size="sm" variant="secondary"
                     onClick={() => { handleDeleteButtonClick(id) }}>
                     <Trash2 className="size-4" />
