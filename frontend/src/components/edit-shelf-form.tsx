@@ -28,7 +28,7 @@ interface EditShelfFormProps {
     description: string;
     colour: string;
     userId: string;
-    setDialogIsOpen?: Dispatch<SetStateAction<boolean>>;
+    setDialogIsOpen: Dispatch<SetStateAction<boolean>>;
 }
 
 export default function EditShelfForm({ id, name, description, colour, userId, setDialogIsOpen }: EditShelfFormProps) {
