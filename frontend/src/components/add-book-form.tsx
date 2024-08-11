@@ -32,6 +32,7 @@ import { useClerk, useUser } from "@clerk/nextjs";
 import { useEffect, useLayoutEffect, useState } from "react";
 import SharedFormFooter from "./shared-form-footer";
 import { Shelf } from "@/types/shelf.type";
+import { MY_BOOKSHELF } from "@/lib/constants";
 
 interface AddBookFormProps {
     setDialogIsOpen?: ((isOpen: boolean) => void);
@@ -68,7 +69,7 @@ export default function AddBookForm({ setDialogIsOpen, isOnInterceptedRoute = fa
 
             setShelves(shelves);
         }
-        
+
         getShelves();
 
     }, [clerk.session, user?.id])
@@ -80,6 +81,7 @@ export default function AddBookForm({ setDialogIsOpen, isOnInterceptedRoute = fa
             imageUrl: "",
             rating: 0,
             status: Status.TBR,
+            shelfId: MY_BOOKSHELF
         }
     });
 
@@ -223,9 +225,10 @@ export default function AddBookForm({ setDialogIsOpen, isOnInterceptedRoute = fa
                                         </SelectTrigger>
                                     </FormControl>
                                     <SelectContent>
-                                        { shelves?.map((shelf, key) => (
+                                        {shelves?.map((shelf, key) => (
                                             <SelectItem key={key} value={shelf.id}>{shelf.name}</SelectItem>
-                                        )) }
+                                        ))}
+                                        {shelves?.length === 0 && <SelectItem value={MY_BOOKSHELF}>{MY_BOOKSHELF}</SelectItem>}
                                     </SelectContent>
                                 </Select>
                                 <FormDescription>
