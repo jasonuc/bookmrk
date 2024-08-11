@@ -38,11 +38,13 @@ model Shelf {
   id          String  @id @default(uuid())
   name        String
   description String? @default("Another literary universe.")
+  colour      String
   user        User    @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId      String
   book        Book[]
 
-  @@unique([name, userId])
+  @@unique([name, userId, colour])
+  @@unique([userId, colour])
 }
 
 model Note {
