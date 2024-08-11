@@ -11,7 +11,6 @@ import {
 import { Shelf } from "@/types/shelf.type";
 import { PenBoxIcon } from "lucide-react";
 import EditShelfForm from "./edit-shelf-form";
-import { useBoolean } from "@/hooks/use-boolean";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
