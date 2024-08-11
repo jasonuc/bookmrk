@@ -20,12 +20,12 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <ClerkProvider afterSignOutUrl={'/'} signInFallbackRedirectUrl={'/home'} signUpFallbackRedirectUrl={'/home'}>
       <TooltipProvider>
         <html lang="en">
-          <body className={cn(lato.variable, 'font-lato relative flex h-screen w-full flex-col text-black bg-foreground/5')}>
+          <body className={cn(lato.variable, 'font-lato relative flex min-h-screen w-full flex-col text-black bg-foreground/5')}>
             <Header />
             {children}
 
             <Toaster />
-            <DotPattern className="-z-50" />
+            <DotPattern  className="-z-[100]" />
           </body>
         </html>
       </TooltipProvider>
