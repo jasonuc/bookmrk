@@ -14,6 +14,11 @@ export class ShelvesService {
   constructor(private readonly prisma: PrismaService) {}
 
   async createNewShelf(createShelfDto: CreateShelfDto) {
+    if (createShelfDto.name === MY_BOOKSHELF)
+      throw new BadRequestException(
+        'Choose another name for your book shelf. This name can not be used',
+      );
+
     const newShelf = await this.prisma.shelf.create({
       data: { ...createShelfDto },
     });
