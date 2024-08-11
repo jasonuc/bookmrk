@@ -24,6 +24,7 @@ export class ShelvesService {
   async findAllUserShelves(userId: string) {
     const allUserShelves = await this.prisma.shelf.findMany({
       where: { userId },
+      include: { book: true },
     });
 
     return allUserShelves;
