@@ -7,8 +7,7 @@ interface HomeButtonSectionProps extends React.HTMLAttributes<HTMLDivElement> {}
 export default function HomeButtonSection({ className }: HomeButtonSectionProps) {
     return (
         <section className={cn("mx-auto flex gap-x-3.5 items-center justify-end max-md:mt-3 md:mb-3 max-w-6xl", className)}>
-            {/* TODO: implement book shelf functionality */}
-            <Link href={'#'}>
+            <Link href={'/home/manage-shelves'}>
                 <Button
                     variant="outline"
                     size="sm">
@@ -16,7 +15,6 @@ export default function HomeButtonSection({ className }: HomeButtonSectionProps)
                 </Button>
             </Link>
             
-            {/* TODO: implement book shelf functionality */}
             <Link href={'/home/add-book'}>
                     <Button
                         variant="outline"
