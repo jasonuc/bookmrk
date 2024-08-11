@@ -6,4 +6,5 @@ export type Shelf = {
     description: string;
     userId: string;
     book: Book[]
+    colour: string;
 }

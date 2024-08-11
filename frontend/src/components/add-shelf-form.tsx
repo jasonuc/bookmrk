@@ -20,6 +20,8 @@ import SharedFormFooter from "./shared-form-footer";
 import { addShelfFormSchema } from "@/schemas/add-shelf-form.schema";
 import { Shelf } from "@/types/shelf.type";
 import { Input } from "./ui/input";
+import { HexColorPicker } from 'react-colorful';
+import { getRandomHexColour } from "@/lib/get-random-hex-colour";
 
 interface AddShelfFormProps extends React.HTMLAttributes<HTMLDivElement> {
     setDialogIsOpen?: ((isOpen: boolean) => void);
@@ -36,7 +38,9 @@ export default function AddShelfForm({ setDialogIsOpen, isOnInterceptedRoute = f
 
     const form = useForm<z.infer<typeof addShelfFormSchema>>({
         resolver: zodResolver(addShelfFormSchema),
-        defaultValues: {},
+        defaultValues: {
+            colour: getRandomHexColour()
+        },
     })
 
     async function onSubmit(values: z.infer<typeof addShelfFormSchema>) {
@@ -46,6 +50,7 @@ export default function AddShelfForm({ setDialogIsOpen, isOnInterceptedRoute = f
         // Send data to the db
         const { data, status } = await axios.post<Shelf>(`${process.env.NEXT_PUBLIC_API_URL}/api/shelves`, {
             ...values,
+            userId: clerk.user?.id
         }, {
             headers: {
                 Authorization: `Bearer ${token}`
@@ -72,6 +77,7 @@ export default function AddShelfForm({ setDialogIsOpen, isOnInterceptedRoute = f
         form.reset()
 
         router.push('/home/manage-shelves');
+        router.refresh();
     }
 
     return (
@@ -109,6 +115,24 @@ export default function AddShelfForm({ setDialogIsOpen, isOnInterceptedRoute = f
                                 </FormControl>
                                 <FormDescription>
                                     A short description of your new shelf.
+                                </FormDescription>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+
+                    <FormField
+                        control={form.control}
+                        name="colour"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Colour</FormLabel>
+                                <FormControl>
+                                    <HexColorPicker
+                                     color={field.value} onChange={field.onChange} />
+                                </FormControl>
+                                <FormDescription>
+                                    Colour code for this shelf
                                 </FormDescription>
                                 <FormMessage />
                             </FormItem>

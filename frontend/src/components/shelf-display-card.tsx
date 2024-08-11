@@ -15,10 +15,12 @@ import { auth } from "@clerk/nextjs/server"
 import { useToast } from "./ui/use-toast";
 import { useClerk } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
+import { Badge } from "./ui/badge";
+import { cn } from "@/lib/utils";
 
 interface ShelfDisplayCardProps extends Shelf { }
 
-export default function ShelfDisplayCard({ id, name, description, userId: _userId, book: books }: ShelfDisplayCardProps) {
+export default function ShelfDisplayCard({ id, name, description, colour, userId: _userId, book: books }: ShelfDisplayCardProps) {
 
     const clerk = useClerk();
     const router = useRouter();
@@ -53,10 +55,11 @@ export default function ShelfDisplayCard({ id, name, description, userId: _userI
     }
 
     return (
-        <Card className="p-2 md:px-3 overflow-hidden">
+        <Card className="p-2 md:px-3 overflow-hidden relative">
             <CardHeader className="whitespace-nowrap">
                 <CardTitle className="overflow-hidden overflow-ellipsis">{name}</CardTitle>
                 <CardDescription className="italic">{description}</CardDescription>
+                <div style={{ backgroundColor: colour }} className="absolute border shadow-md size-3 rounded-full top-3 right-3" />
             </CardHeader>
             <CardContent>
                 {books.length ?
