@@ -7,5 +7,6 @@ import { PrismaModule } from '@/prisma/prisma.module';
   imports: [PrismaModule],
   controllers: [ShelvesController],
   providers: [ShelvesService],
+  exports: [ShelvesService],
 })
 export class ShelvesModule {}
