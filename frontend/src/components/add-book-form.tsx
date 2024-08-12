@@ -87,7 +87,7 @@ export default function AddBookForm({ setDialogIsOpen, isOnInterceptedRoute = fa
 
     async function onSubmit(values: z.infer<typeof addBookFormSchema>) {
         // Do something with the form values.
-        // console.log(values); // Prints the form values
+        console.log(values); // Prints the form values
         // console.log(user?.id);
         const token = await clerk.session?.getToken();
         // console.log(token);
