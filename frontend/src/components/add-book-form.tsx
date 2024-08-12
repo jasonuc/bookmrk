@@ -221,7 +221,7 @@ export default function AddBookForm({ setDialogIsOpen, isOnInterceptedRoute = fa
                                 <Select onValueChange={field.onChange} defaultValue={field.value}>
                                     <FormControl>
                                         <SelectTrigger>
-                                            <SelectValue placeholder="Which bookshelf is this gonna go in?" />
+                                            <SelectValue>{MY_BOOKSHELF}</SelectValue>
                                         </SelectTrigger>
                                     </FormControl>
                                     <SelectContent>
