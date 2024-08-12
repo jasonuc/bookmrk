@@ -4,12 +4,14 @@ import { UpdateBookDto } from './dto/update-book.dto';
 import { PrismaService } from '@/prisma/prisma.service';
 import { UsersService } from '@/users/users.service';
 import { MY_BOOKSHELF } from '@/utils/constants';
+import { ShelvesService } from '@/shelves/shelves.service';
 
 @Injectable()
 export class BooksService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly usersService: UsersService,
+    private readonly shelfService: ShelvesService,
   ) {}
 
   async createNewBook(createBookDto: CreateBookDto) {
@@ -22,18 +24,29 @@ export class BooksService {
           connect: { id: userId },
         },
         shelf: {
-          connectOrCreate: {
-            where: { id: shelfId },
-            create: {
-              name: MY_BOOKSHELF,
-              description: 'My literary universe.',
-              colour: '#ffffff',
-              user: {
-                connect: { id: userId },
-              },
-            },
-          },
+          connect: { id: shelfId },
         },
+      },
+    });
+
+    return newBook;
+  }
+
+  async createNewBookAndNewShelf(createBookDto: CreateBookDto) {
+    const { userId, ...bookData } = createBookDto;
+
+    const { id: shelfId } = await this.shelfService.createNewShelf({
+      name: MY_BOOKSHELF,
+      description: 'My literary universe.',
+      colour: '#ffffff',
+      userId: userId,
+    });
+
+    const newBook = await this.prisma.book.create({
+      data: {
+        ...bookData,
+        shelfId: shelfId,
+        userId: userId,
       },
     });
 
