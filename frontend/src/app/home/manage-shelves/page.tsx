@@ -22,7 +22,7 @@ async function getUserShelves() {
 
 export default async function ManageShelvesPage() {
 
-  const userShelves = [] as Shelf[];
+  const userShelves = await getUserShelves();
 
   return (
     <div className="pb-10 px-2 md:px-5">
