@@ -24,7 +24,11 @@ export class BooksController {
 
   @Post()
   async create(@Body() createBookDto: CreateBookDto) {
-    return await this.booksService.createNewBook(createBookDto);
+    if (createBookDto.shelfId) {
+      return await this.booksService.createNewBook(createBookDto);
+    } else {
+      return await this.booksService.createNewBookAndNewShelf(createBookDto);
+    }
   }
 
   @Get()
