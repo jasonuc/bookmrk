@@ -43,9 +43,7 @@ model Shelf {
   userId      String
   book        Book[]
 
-  @@unique([name, userId, colour])
-  @@unique([name, userId])
-  @@unique([userId, colour])
+  @@unique([userId, name, colour])
 }
 
 model Note {
