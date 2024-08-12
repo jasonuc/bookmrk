@@ -13,8 +13,11 @@ import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 export class ShelvesService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async createNewShelf(createShelfDto: CreateShelfDto) {
-    if (createShelfDto.name === MY_BOOKSHELF)
+  async createNewShelf(
+    createShelfDto: CreateShelfDto,
+    defaultShelf: boolean = true,
+  ) {
+    if (createShelfDto.name === MY_BOOKSHELF && defaultShelf)
       throw new BadRequestException(
         'Choose another name for your book shelf. This name can not be used',
       );

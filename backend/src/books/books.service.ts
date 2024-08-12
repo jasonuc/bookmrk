@@ -35,12 +35,15 @@ export class BooksService {
   async createNewBookAndNewShelf(createBookDto: CreateBookDto) {
     const { userId, ...bookData } = createBookDto;
 
-    const { id: shelfId } = await this.shelfService.createNewShelf({
-      name: MY_BOOKSHELF,
-      description: 'My literary universe.',
-      colour: '#ffffff',
-      userId: userId,
-    });
+    const { id: shelfId } = await this.shelfService.createNewShelf(
+      {
+        name: MY_BOOKSHELF,
+        description: 'My literary universe.',
+        colour: '#ffffff',
+        userId: userId,
+      },
+      false,
+    );
 
     const newBook = await this.prisma.book.create({
       data: {

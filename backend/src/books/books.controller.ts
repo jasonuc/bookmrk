@@ -15,6 +15,7 @@ import { CreateBookDto } from './dto/create-book.dto';
 import { UpdateBookDto } from './dto/update-book.dto';
 import { UserId } from '@/decorators/user-id.decorator';
 import { JwtAuthGuard } from '@/auth/jwt-auth.guard';
+import { MY_BOOKSHELF } from '@/utils/constants';
 
 @Controller('books')
 @UsePipes(new ValidationPipe({ whitelist: true }))
@@ -24,7 +25,7 @@ export class BooksController {
 
   @Post()
   async create(@Body() createBookDto: CreateBookDto) {
-    if (createBookDto.shelfId) {
+    if (createBookDto.shelfId !== MY_BOOKSHELF) {
       return await this.booksService.createNewBook(createBookDto);
     } else {
       return await this.booksService.createNewBookAndNewShelf(createBookDto);

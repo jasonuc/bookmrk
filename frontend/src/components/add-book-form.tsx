@@ -222,7 +222,7 @@ export default function AddBookForm({ setDialogIsOpen, isOnInterceptedRoute = fa
                                     <FormControl>
                                         <SelectTrigger>
                                             { shelves?.length === 0 ? (
-                                                <SelectValue>{MY_BOOKSHELF}</SelectValue>
+                                                <SelectValue defaultValue={MY_BOOKSHELF}>{MY_BOOKSHELF}</SelectValue>
                                             ) : (
                                                 <SelectValue defaultValue={shelves?.find(shelf => shelf.name === MY_BOOKSHELF)?.id}>{MY_BOOKSHELF}</SelectValue>
                                             ) }
