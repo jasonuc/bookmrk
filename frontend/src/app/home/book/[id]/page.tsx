@@ -9,6 +9,8 @@ import axios from "axios";
 import SparklesText from "@/components/magicui/sparkles-text";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
+import NotesListDisplay from "@/components/notes-display";
+import { Note } from "@/types/note.type";
 
 async function getBookData(bookId: string): Promise<Book> {
   const { getToken } = auth();
@@ -21,6 +23,19 @@ async function getBookData(bookId: string): Promise<Book> {
   });
 
   return booksData
+}
+
+async function getNotes(bookId: string): Promise<Note[]> {
+  const { getToken } = auth();
+  const token = await getToken();
+
+  const { data: notes } = await axios<Note[]>(`${process.env.NEXT_PUBLIC_API_URL}/api/notes/book/${bookId}`, {
+    headers: {
+      'Authorization': `Bearer ${token}`
+    }
+  })
+
+  return notes;
 }
 
 const makeDelay = (name: string, start: number, increment: number) => {
@@ -41,6 +56,9 @@ export default async function BookPage({ params }: { params: { id: string } }) {
   const { userId: viewerUserId } = auth()
   const blurFadeDelay = makeDelay("Blur Fade Component's Delay", 0.1, 0.1);
 
+  const notes = await getNotes(id);
+  const notesAreEmpty = notes.length === 0;
+
   const { title, rating, status, lastUpdated, dateAdded, userId, user, imageUrl } = book;
 
   return (
@@ -58,9 +76,11 @@ export default async function BookPage({ params }: { params: { id: string } }) {
         </div>
       </BlurFade>
 
-      <div className={cn("pb-5 grid grid-cols-1 md:grid-rows-1 md:grid-cols-2 gap-5 w-full h-full text-lg", {
-        "grid-rows-[25%_75%]": viewerUserId !== userId,
-        "grid-rows-[20%_80%]": viewerUserId === userId,
+      <div className={cn("pb-5  gap-5 w-full h-full text-lg", {
+        "grid grid-cols-1 md:grid-rows-1 md:grid-cols-2": !notesAreEmpty,
+        "grid-rows-[25%_75%]": viewerUserId !== userId && !notesAreEmpty,
+        "grid-rows-[20%_80%]": viewerUserId === userId && !notesAreEmpty,
+        "flex flex-col justify-center items-center": notesAreEmpty
       })}>
 
         <div className="col-span-1 flex flex-col space-y-8 md:space-y-10">
@@ -88,14 +108,22 @@ export default async function BookPage({ params }: { params: { id: string } }) {
           </BlurFade>
 
           <BlurFade delay={blurFadeDelay()}>
-            <div className="w-full h-full border hidden md:flex">
-              <Image src={imageUrl} width={300} height={300} className="object-fill grow"  alt="Image" />
+            <div className={cn("size-full md:flex", {
+              "max-md:hidden w-fit": !notesAreEmpty
+            })}>
+              <Image src={imageUrl} width={300} height={300} className="object-fill grow" alt="Image" />
             </div>
           </BlurFade>
         </div>
 
-        <BlurFade delay={blurFadeDelay()}>
-          <div className="bg-muted-foreground/20 w-full h-full" />
+        <BlurFade delay={blurFadeDelay()} className={cn({
+          "hidden": notesAreEmpty
+        })}>
+          <div className={cn("w-full h-full", {
+            "bg-muted-foreground/20": notesAreEmpty
+          })}>
+            <NotesListDisplay notes={notes} />
+          </div>
         </BlurFade>
 
       </div>
