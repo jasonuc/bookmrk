@@ -15,6 +15,7 @@ export const metadata: Metadata = {
   description: "Read it, save it, note it!",
   openGraph: {
     url: new URL("https://bookmrk.jasonuc.com"),
+    siteName: "Bookmrk",
     description: "Read it, save it, note it!",
     images: [
       {
