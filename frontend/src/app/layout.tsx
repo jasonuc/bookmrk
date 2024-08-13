@@ -18,13 +18,13 @@ export const metadata: Metadata = {
     description: "Read it, save it, note it!",
     images: [
       {
-        url: '/bookmrk-demo.jpeg',
+        url: 'https://bookmrk.jasonuc.com/bookmrk-demo.png',
         width: 800,
         height: 600,
         alt: 'Bookmrk Demo',
       },
       {
-        url: '/bookmrk-demo.jpeg',
+        url: 'https://bookmrk.jasonuc.com/bookmrk-demo.png',
         width: 1800,
         height: 1600,
         alt: 'Bookmrk Demo',
