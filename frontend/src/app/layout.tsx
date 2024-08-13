@@ -14,15 +14,17 @@ export const metadata: Metadata = {
   title: "Bookmrk",
   description: "Read it, save it, note it!",
   openGraph: {
+    url: new URL("https://bookmrk.jasonuc.com"),
+    description: "Read it, save it, note it!",
     images: [
       {
-        url: '/bookmrk-demo',
+        url: '/bookmrk-demo.jpeg',
         width: 800,
         height: 600,
         alt: 'Bookmrk Demo',
       },
       {
-        url: '/bookmrk-demo',
+        url: '/bookmrk-demo.jpeg',
         width: 1800,
         height: 1600,
         alt: 'Bookmrk Demo',
