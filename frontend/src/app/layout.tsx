@@ -10,8 +10,25 @@ import Header from "@/components/header";
 import { Toaster } from "@/components/ui/toaster";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://bookmrk.jasonuc.com"),
   title: "Bookmrk",
-  description: "Read it, save it, log it !)",
+  description: "Read it, save it, note it!",
+  openGraph: {
+    images: [
+      {
+        url: '/bookmrk-demo',
+        width: 800,
+        height: 600,
+        alt: 'Bookmrk Demo',
+      },
+      {
+        url: '/bookmrk-demo',
+        width: 1800,
+        height: 1600,
+        alt: 'Bookmrk Demo',
+      },
+    ]
+  }
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode; }>) {
