@@ -222,7 +222,7 @@ export default function AddBookForm({ setDialogIsOpen, isOnInterceptedRoute = fa
                                     <FormControl>
                                         <SelectTrigger>
                                             { shelves?.length === 0 ? (
-                                                <SelectValue defaultValue={MY_BOOKSHELF}>{MY_BOOKSHELF}</SelectValue>
+                                                <SelectValue defaultValue={MY_BOOKSHELF} placeholder={MY_BOOKSHELF} className="data-[placeholder]:text-black" />
                                             ) : (
                                                 <SelectValue placeholder="Select a Bookshelf" className="data-[placeholder]:text-black" />
                                             ) }
