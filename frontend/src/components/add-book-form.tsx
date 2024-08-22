@@ -56,7 +56,7 @@ export default function AddBookForm({ setDialogIsOpen, isOnInterceptedRoute = fa
         setIsMounted(true);
     }, [])
 
-    useLayoutEffect(() => {
+    useEffect(() => {
         const getShelves = async () => {
 
             const token = await clerk.session?.getToken();
@@ -68,6 +68,7 @@ export default function AddBookForm({ setDialogIsOpen, isOnInterceptedRoute = fa
             });
 
             setShelves(shelves);
+            shelves?.find(shelf => shelf.name === MY_BOOKSHELF)?.id || MY_BOOKSHELF
         }
 
         getShelves();
@@ -81,7 +82,6 @@ export default function AddBookForm({ setDialogIsOpen, isOnInterceptedRoute = fa
             imageUrl: "",
             rating: 0,
             status: Status.TBR,
-            shelfId: MY_BOOKSHELF
         }
     });
 
@@ -224,7 +224,7 @@ export default function AddBookForm({ setDialogIsOpen, isOnInterceptedRoute = fa
                                             { shelves?.length === 0 ? (
                                                 <SelectValue defaultValue={MY_BOOKSHELF}>{MY_BOOKSHELF}</SelectValue>
                                             ) : (
-                                                <SelectValue defaultValue={shelves?.find(shelf => shelf.name === MY_BOOKSHELF)?.id}>{MY_BOOKSHELF}</SelectValue>
+                                                <SelectValue placeholder="Select a Bookshelf" className="data-[placeholder]:text-black" />
                                             ) }
                                         </SelectTrigger>
                                     </FormControl>
