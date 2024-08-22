@@ -1,15 +1,19 @@
 import LetterPullup from "@/components/magicui/letter-pullup";
 import RetroGrid from "@/components/magicui/retro-grid";
 import ShinyButton from "@/components/magicui/shiny-button";
+import { cn } from "@/lib/utils";
 import { auth } from "@clerk/nextjs/server";
 import Link from "next/link";
 
-export default function GuestLandingPage() {
+export default function LandingPage() {
 
   const { userId } = auth();
 
   return (
-    <main className="relative flex h-screen w-full flex-col items-center justify-center overflow-hidden rounded-lg border bg-background md:shadow-xl">
+    <main className={cn("relative flex w-full flex-col items-center justify-center overflow-hidden rounded-lg border bg-background md:shadow-xl", {
+      "h-screen": !userId,
+      "h-[90.9vh]": userId,
+    })}>
 
       <div className="flex flex-col items-center justify-center space-y-2">
         <Link href={userId ? '/home' : '/'}>
