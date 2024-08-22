@@ -1,7 +1,7 @@
+import FAQ from "@/components/faq";
 import LetterPullup from "@/components/magicui/letter-pullup";
 import RetroGrid from "@/components/magicui/retro-grid";
 import ShinyButton from "@/components/magicui/shiny-button";
-import { cn } from "@/lib/utils";
 import { auth } from "@clerk/nextjs/server";
 import Link from "next/link";
 
@@ -25,6 +25,8 @@ export default function LandingPage() {
       <Link href='/sign-up' className="mt-7">
         <ShinyButton text={userId ? 'Continue your journey now 🙌' : "Begin your journey now 🎉"} />
       </Link>
+
+      <FAQ />
 
       <RetroGrid />
     </main>
