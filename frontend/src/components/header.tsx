@@ -2,12 +2,15 @@ import Link from "next/link";
 import AnimatedUser from "./animated-user";
 import GradualSpacing from "./magicui/gradual-spacing";
 import { auth } from "@clerk/nextjs/server";
+import { headers } from "next/headers";
 
 export default function Header() {
 
   const { userId } = auth()
+  const headersList = headers()
+  const currentPageUrl = headersList.get('referer') || ""
 
-  if (!userId) return null;
+  if (!userId || (currentPageUrl.includes('sign-up') || currentPageUrl.includes('sign-in'))) return null;
 
   return (
     <div className="w-full h-20 flex items-center justify-between p-4 md:p-10">
