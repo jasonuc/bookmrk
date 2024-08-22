@@ -10,10 +10,7 @@ export default function LandingPage() {
   const { userId } = auth();
 
   return (
-    <main className={cn("relative flex w-full flex-col items-center justify-center overflow-hidden rounded-lg border bg-background md:shadow-xl", {
-      "h-screen": !userId,
-      "h-[90.9vh]": userId,
-    })}>
+    <main className="relative flex h-screen w-full flex-col items-center justify-center overflow-hidden rounded-lg border bg-background md:shadow-xl">
 
       <div className="flex flex-col items-center justify-center space-y-2">
         <Link href={userId ? '/home' : '/'}>
