@@ -9,6 +9,7 @@ export default function Header() {
   const { userId } = auth()
   const headersList = headers()
   const currentPageUrl = headersList.get('referer') || ""
+  console.log(currentPageUrl);
 
   if (!userId || currentPageUrl.endsWith('.com/') || currentPageUrl.includes('sign-up') || currentPageUrl.includes('sign-in')) return null;
 
