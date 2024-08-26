@@ -110,9 +110,10 @@ export default async function BookPage({ params }: { params: { id: string } }) {
           <BlurFade delay={blurFadeDelay()}>
             <div className={cn("size-full md:flex", {
               "max-md:hidden w-fit": !notesAreEmpty,
-              "hidden": !!imageUrl,
             })}>
-              <Image src={imageUrl} width={300} height={300} className="object-fill grow" alt="Image" />
+              <Image src={imageUrl} width={300} height={300} className={cn("object-fill grow", {
+                "hidden": !!imageUrl == false,
+              })} alt="Image" />
             </div>
           </BlurFade>
         </div>
