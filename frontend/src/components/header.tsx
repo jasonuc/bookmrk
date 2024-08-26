@@ -9,9 +9,9 @@ export default function Header() {
   const { userId } = auth()
   const headersList = headers()
   const currentPageUrl = headersList.get('referer') || ""
-  console.log(currentPageUrl);
+  console.log(currentPageUrl)
 
-  if (!userId || currentPageUrl.endsWith('/') || currentPageUrl.includes('sign-up') || currentPageUrl.includes('sign-in')) return null;
+  if (!userId || currentPageUrl.includes('sign-up') || currentPageUrl.includes('sign-in')) return null;
 
   return (
     <div className="w-full h-20 flex items-center justify-between p-4 md:p-10">
