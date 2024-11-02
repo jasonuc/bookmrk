@@ -14,6 +14,8 @@ import { Button } from "./ui/button";
 import Link from "next/link";
 import HomeButtonSection from "./home-button-section";
 
+export const revalidate = 60; // Fetches new data every 60 seconds
+
 async function getBooksData(): Promise<Book[]> {
     const { getToken } = auth();
     const token = await getToken();
