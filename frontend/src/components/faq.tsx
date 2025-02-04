@@ -23,7 +23,7 @@ export default function FAQ() {
                 <AccordionItem value="item-3">
                     <AccordionTrigger>Is Bookmrk open-source?</AccordionTrigger>
                     <AccordionContent>
-                        Yes, Bookmrk is open-source, allowing anyone to contribute to its development. <Link href="https://github.com/jasonuc/bookmrk" target="_blank" className="text-blue-800 underline font-bold">Visit the GitHub Repo</Link>
+                        {"No, not at the moment. Bookmrk was created exclusively by Jason."}
                     </AccordionContent>
                 </AccordionItem>
             </Accordion>
